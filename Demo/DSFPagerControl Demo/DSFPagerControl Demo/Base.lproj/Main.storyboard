@@ -818,7 +818,7 @@
                                                     <userDefinedRuntimeAttribute type="number" keyPath="pageCount">
                                                         <integer key="value" value="5"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="NO"/>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="NO"/>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>

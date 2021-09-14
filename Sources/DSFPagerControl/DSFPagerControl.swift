@@ -331,9 +331,9 @@ public extension DSFPagerControl {
 		// Handle some special chars
 		switch Int(event.keyCode) {
 		case kVK_LeftArrow, kVK_UpArrow:
-			self.moveToPage(self.clamped(self.selectedPage - 1))
+			self.moveToPreviousPage()
 		case kVK_RightArrow, kVK_DownArrow:
-			self.moveToPage(self.clamped(self.selectedPage + 1))
+			self.moveToNextPage()
 
 		default:
 			super.keyDown(with: event)
@@ -363,7 +363,34 @@ public extension DSFPagerControl {
 
 // MARK: - Page changing
 
-extension DSFPagerControl {
+public extension DSFPagerControl {
+
+	/// Is the selected page the first page?
+	@objc func isAtFirstPage() -> Bool {
+		return self.selectedPage == 0
+	}
+
+	/// Is the selected page the last page?
+	@objc func isAtLastPage() -> Bool {
+		return self.selectedPage == self.pageCount - 1
+	}
+
+	/// Move to the next page in the pager. If the current page is the last page, does nothing.
+	///
+	/// Will call the delegate methods to validate the change
+	@objc func moveToNextPage() {
+		self.moveToPage(self.clamped(self.selectedPage + 1))
+	}
+
+	/// Move to the previous page in the pager. If the current page is the first page, does nothing
+	///
+	/// Will call the delegate methods to validate the change
+	@objc func moveToPreviousPage() {
+		self.moveToPage(self.clamped(self.selectedPage - 1))
+	}
+}
+
+private extension DSFPagerControl {
 	// Must be called with a valid page range
 	func moveToPage(_ page: Int) {
 		assert((0 ..< self.pageCount).contains(page))
@@ -378,7 +405,8 @@ extension DSFPagerControl {
 		NSAccessibility.post(element: self, notification: .selectedChildrenChanged)
 	}
 
-	@inlinable func clamped(_ page: Int) -> Int {
+	// Clamp page to the current page count
+	func clamped(_ page: Int) -> Int {
 		max(0, min(self.pageCount - 1, page))
 	}
 }

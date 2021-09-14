@@ -14,12 +14,10 @@ class ViewController: NSViewController {
 	@IBOutlet weak var previousPageButton: NSButton!
 	@IBOutlet weak var nextPageButton: NSButton!
 
-	@objc dynamic var imagePagerSelection: Int = 0
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		imagePager.selectedPage = self.imagePagerSelection
+		imagePager.selectedPage = 0
 		updateDisplay()
 
 		// Do any additional setup after loading the view.
@@ -48,19 +46,17 @@ class ViewController: NSViewController {
 	}
 
 	func updateDisplay() {
-		nextPageButton.isEnabled = imagePagerSelection < imagePager.pageCount - 1
-		previousPageButton.isEnabled = imagePagerSelection > 0
+		nextPageButton.isEnabled = !imagePager.isAtLastPage()
+		previousPageButton.isEnabled = !imagePager.isAtFirstPage()
 	}
 
 	@IBAction func prevPage(_ sender: Any) {
-		imagePagerSelection -= 1
-		imagePager.selectedPage = imagePagerSelection
+		imagePager.moveToPreviousPage()
 		updateDisplay()
 	}
 
 	@IBAction func nextPage(_ sender: Any) {
-		imagePagerSelection += 1
-		imagePager.selectedPage = imagePagerSelection
+		imagePager.moveToNextPage()
 		updateDisplay()
 	}
 }
