@@ -31,9 +31,9 @@ import Foundation
 /// The pager delegate protocol
 @objc public protocol DSFPagerControlHandling: NSObjectProtocol {
 	/// Called when the pager has been asked to change to a new page. Return false to cancel the change
-	func pagerControl(_ pager: DSFPagerControl, willMoveToPage: Int) -> Bool
+	func pagerControl(_ pager: DSFPagerControl, willMoveToPage page: Int) -> Bool
 	/// Called when the pager changed to a new page
-	func pagerControl(_ pager: DSFPagerControl, didMoveToPage: Int)
+	func pagerControl(_ pager: DSFPagerControl, didMoveToPage page: Int)
 }
 
 #endif

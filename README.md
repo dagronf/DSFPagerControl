@@ -29,21 +29,23 @@ So here's a relatively simple drop-in version.
 * Optional keyboard selection support
 * Optional mouse selection support
 
+The control is designed to be driven either by interacting with the control, or externally 
+
 ## Properties
 
 Many of these properties are `@IBInspectable`, so you can set them directly within interface builder.
 
-| Name                   | Type           | Description                                         |
-|:-----------------------|:---------------|:----------------------------------------------------|
-| orientation            | `Orientation`  | Is the page control vertically or horizontally oriented? |
-| pageCount              | `Int`          | The number of page indicators to display in the control |
-| selectedPage           | `Int`          | The current page selection |
-| selectedColor          | `NSColor?`     | The color to draw a selected page (nil to use default colors) |
-| unselectedColor        | `NSColor?`     | The color to draw an unselected page (nil to use default colors) |
-| boundsSize             | `CGSize`       | The size of the page indicator |
-| dotSize                | `CGFloat`      | The size of the dot to be displayed in the center of the page indicator |
-| allowsKeyboardFocus    | `Bool`         | Allow the user to use the keyboard to focus and change the page selection |
-| allowsMouseSelection   | `Bool`         | Allow the user to use the mouse to change the page selection |
+| Name                     | Type           | Description                                         |
+|:-------------------------|:---------------|:----------------------------------------------------|
+| orientation              | `Orientation`  | Is the page control vertically or horizontally oriented? |
+| pageCount                | `Int`          | The number of page indicators to display in the control |
+| selectedPage             | `Int`          | The current page selection |
+| selectedColor            | `NSColor?`     | The color to draw a selected page (nil to use default colors) |
+| unselectedColor          | `NSColor?`     | The color to draw an unselected page (nil to use default colors) |
+| boundsSize               | `CGSize`       | The size of the page indicator |
+| dotSize                  | `CGFloat`      | The size of the dot to be displayed in the center of the page indicator |
+| allowsKeyboardSelection  | `Bool`         | Allow the user to use the keyboard to focus and change the page selection |
+| allowsMouseSelection     | `Bool`         | Allow the user to use the mouse to change the page selection |
 
 ## Observables
 
@@ -54,16 +56,37 @@ The following properties are observable.
 ## Delegate
 
 ```swift
-func pagerControl(_ pager: DSFPagerControl, willMoveToPage: Int) -> Bool
+func pagerControl(_ pager: DSFPagerControl, willMoveToPage page: Int) -> Bool
 ```
 
-Called when the pager control is asked to change to a new page. You can cancel the change by returning `false`
+Called when the user attempts to change the selection of the pager control is asked to change to a new page. You can deny the page change by returning `false`
+
+Note this is only called when allowsKeyboardFocus
 
 ```swift
-func pagerControl(_ pager: DSFPagerControl, didMoveToPage: Int)
+func pagerControl(_ pager: DSFPagerControl, didMoveToPage page: Int)
 ```
 
 Called when the pager control has changed to a new page.
+
+## User interaction
+
+The control supports both keyboard and mouse interactions. When the user interacts with the control you can decide whether to perform the change via the use of a delegate.
+
+### Keyboard
+
+When `allowsKeyboardSelection` is true, the control will accept focus events.
+
+* Down/Right: Move to the next page (if possible)
+* Up/Left: Move to the previous page (if possible)
+
+When a key is pressed, the delegate is called (`willMoveToPage`) to ask whether the change is valid. If so, the pager will update its display and call `didMoveToPage` on the delegate.
+
+### Mouse
+
+When `allowsMouseSelection` is true, the cursor will change to a hand when its over the control.  
+
+When the user clicks a page indicator, the delegate is called (`willMoveToPage`) to ask whether the change is valid. If so, the pager will update its display and call `didMoveToPage` on the delegate. 
 
 ## Custom color support
 

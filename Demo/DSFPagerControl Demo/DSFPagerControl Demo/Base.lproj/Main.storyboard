@@ -707,14 +707,14 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="DSFPagerControl_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="586" height="436"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gpx-09-Izh">
-                                <rect key="frame" x="20" y="66" width="162" height="184"/>
+                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" misplaced="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gpx-09-Izh">
+                                <rect key="frame" x="20" y="42" width="162" height="374"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GEo-83-iTm">
-                                        <rect key="frame" x="-2" y="168" width="108" height="16"/>
+                                        <rect key="frame" x="-2" y="358" width="108" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Standard Control" id="Ygi-nS-R8R">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -722,17 +722,17 @@
                                         </textFieldCell>
                                     </textField>
                                     <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yF2-B0-fVt" customClass="DSFPagerControl" customModule="DSFPagerControl">
-                                        <rect key="frame" x="0.0" y="96" width="162" height="64"/>
+                                        <rect key="frame" x="0.0" y="286" width="162" height="64"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="pageCount">
                                                 <integer key="value" value="6"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="YES"/>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </customView>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crw-Dv-duf">
-                                        <rect key="frame" x="-2" y="72" width="94" height="16"/>
+                                        <rect key="frame" x="-2" y="262" width="94" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Custom Colors" id="aLk-eJ-yAY">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -740,12 +740,11 @@
                                         </textFieldCell>
                                     </textField>
                                     <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drP-gI-9c9" customClass="DSFPagerControl" customModule="DSFPagerControl">
-                                        <rect key="frame" x="0.0" y="0.0" width="162" height="64"/>
+                                        <rect key="frame" x="0.0" y="190" width="162" height="64"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="pageCount">
                                                 <integer key="value" value="8"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="YES"/>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="YES"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="dotSize">
                                                 <real key="value" value="12"/>
@@ -756,10 +755,89 @@
                                             <userDefinedRuntimeAttribute type="color" keyPath="unselectedColor">
                                                 <color key="value" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
                                             </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="NO"/>
                                         </userDefinedRuntimeAttributes>
                                     </customView>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WDR-hC-kp7" userLabel="Simple Combination">
+                                        <rect key="frame" x="-2" y="166" width="94" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Custom Colors" id="hTl-WO-Zft">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0TG-rE-21f">
+                                        <rect key="frame" x="0.0" y="0.0" width="162" height="158"/>
+                                        <subviews>
+                                            <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JfE-1W-7Np">
+                                                <rect key="frame" x="13" y="58" width="136" height="100"/>
+                                                <subviews>
+                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YZC-IM-XJG">
+                                                        <rect key="frame" x="0.0" y="44" width="10" height="14"/>
+                                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSGoBackTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="Jv7-My-asy">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="prevPage:" target="XfG-lQ-9wD" id="gEe-4v-Hew"/>
+                                                        </connections>
+                                                    </button>
+                                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6KY-tA-YEE">
+                                                        <rect key="frame" x="15" y="-3" width="106" height="106"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="100" id="YBp-dN-voK"/>
+                                                            <constraint firstAttribute="height" constant="100" id="v29-dU-LjP"/>
+                                                        </constraints>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="JGC-lN-vLe"/>
+                                                    </imageView>
+                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SXm-Z3-qDM">
+                                                        <rect key="frame" x="126" y="44" width="10" height="14"/>
+                                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSGoForwardTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="NOO-Sg-aXE">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="nextPage:" target="XfG-lQ-9wD" id="zEK-gG-YaK"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <visibilityPriorities>
+                                                    <integer value="1000"/>
+                                                    <integer value="1000"/>
+                                                    <integer value="1000"/>
+                                                </visibilityPriorities>
+                                                <customSpacing>
+                                                    <real value="3.4028234663852886e+38"/>
+                                                    <real value="3.4028234663852886e+38"/>
+                                                    <real value="3.4028234663852886e+38"/>
+                                                </customSpacing>
+                                            </stackView>
+                                            <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zMN-5O-e5V" customClass="DSFPagerControl" customModule="DSFPagerControl">
+                                                <rect key="frame" x="0.0" y="0.0" width="162" height="50"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="pageCount">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <outlet property="delegate" destination="XfG-lQ-9wD" id="MrV-3F-a9l"/>
+                                                </connections>
+                                            </customView>
+                                        </subviews>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
                                 </subviews>
                                 <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
@@ -770,10 +848,12 @@
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
                             <stackView wantsLayer="YES" distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QM4-di-nj1">
-                                <rect key="frame" x="204" y="130" width="108" height="120"/>
+                                <rect key="frame" x="204" y="296" width="108" height="120"/>
                                 <subviews>
                                     <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hAM-Zr-4dD" customClass="DSFPagerControl" customModule="DSFPagerControl">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="120"/>
@@ -781,9 +861,9 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="pageCount">
                                                 <integer key="value" value="6"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="YES"/>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="YES"/>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isHorizontal" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </customView>
                                     <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zEr-a3-bN9" customClass="DSFPagerControl" customModule="DSFPagerControl">
@@ -792,7 +872,6 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="pageCount">
                                                 <integer key="value" value="3"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="YES"/>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="YES"/>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isHorizontal" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="dotSize">
@@ -810,6 +889,7 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="pageIndicatorWidth">
                                                 <real key="value" value="32"/>
                                             </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="NO"/>
                                         </userDefinedRuntimeAttributes>
                                     </customView>
                                 </subviews>
@@ -830,10 +910,19 @@
                             <constraint firstItem="Gpx-09-Izh" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="uDw-6x-4n4"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imagePager" destination="zMN-5O-e5V" id="blm-MP-IU0"/>
+                        <outlet property="nextPageButton" destination="SXm-Z3-qDM" id="IJG-qe-LIx"/>
+                        <outlet property="previousPageButton" destination="YZC-IM-XJG" id="Csa-HI-wuE"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="74" y="850"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSGoBackTemplate" width="10" height="14"/>
+        <image name="NSGoForwardTemplate" width="10" height="14"/>
+    </resources>
 </document>
