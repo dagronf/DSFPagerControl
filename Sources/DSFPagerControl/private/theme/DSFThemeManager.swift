@@ -47,7 +47,7 @@ private extension NSNotification.Name {
 	static let SystemColorsChangeNotification = NSNotification.Name("NSSystemColorsDidChangeNotification")
 }
 
-@objc public final class DSFThemeManager: NSObject {
+@objc internal class DSFThemeManager: NSObject {
 	/// A common shared thememanager
 	@objc public static let shared = DSFThemeManager()
 
@@ -199,7 +199,7 @@ private extension NSNotification.Name {
 
 // MARK: - Observers and Listeners
 
-@objc public extension DSFThemeManager {
+@objc extension DSFThemeManager {
 	/// Adds an entry to the notification center to call the provided selector with the notification.
 	func addObserver(_ observer: Any, selector aSelector: Selector) {
 		self.notificationCenter.addObserver(
@@ -228,7 +228,7 @@ private extension NSNotification.Name {
 
 // MARK: - Static theme values
 
-@objc public extension DSFThemeManager {
+@objc extension DSFThemeManager {
 	/// Is the user interface being displayed as dark (Mojave and later)
 	static var IsDark: Bool {
 		if #available(OSX 10.14, *) {

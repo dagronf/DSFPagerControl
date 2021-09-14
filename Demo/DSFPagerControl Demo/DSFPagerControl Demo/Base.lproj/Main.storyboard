@@ -750,12 +750,6 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="dotSize">
                                                 <real key="value" value="12"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="dotBoundsWidth">
-                                                <real key="value" value="32"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="dotBoundsHeight">
-                                                <real key="value" value="32"/>
-                                            </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
                                                 <color key="value" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                             </userDefinedRuntimeAttribute>
@@ -804,17 +798,17 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="dotSize">
                                                 <real key="value" value="16"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="dotBoundsHeight">
-                                                <real key="value" value="28"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="dotBoundsWidth">
-                                                <real key="value" value="28"/>
-                                            </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
                                                 <color key="value" name="systemTealColor" catalog="System" colorSpace="catalog"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="unselectedColor">
                                                 <color key="value" name="systemIndigoColor" catalog="System" colorSpace="catalog"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="pageIndicatorHeight">
+                                                <real key="value" value="32"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="pageIndicatorWidth">
+                                                <real key="value" value="32"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </customView>

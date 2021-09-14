@@ -32,6 +32,16 @@ import AppKit
 /// A pager control
 @IBDesignable
 public class DSFPagerControl: NSView {
+
+	/// The orientation for the control
+	@objc(DSFPagerControlOrientation)
+	public enum Orientation: Int {
+		/// Horizontal orientation
+		case horizontal = 0
+		/// Vertical orientation
+		case vertical   = 1
+	}
+
 	/// The delegate to receive feedback
 	@IBOutlet weak var delegate: DSFPagerControlHandling?
 
@@ -88,20 +98,39 @@ public class DSFPagerControl: NSView {
 		}
 	}
 
-	/// The width of each dot segment
-	@IBInspectable public var dotBoundsWidth: CGFloat = 20 {
+	/// The width of each page indicator
+	@IBInspectable public var pageIndicatorWidth: CGFloat = 20 {
 		didSet {
 			self.rebuildDotLayers()
 		}
 	}
-	/// The height of each dot segment
-	@IBInspectable public var dotBoundsHeight: CGFloat = 20 {
+	/// The height of each page indicator
+	@IBInspectable public var pageIndicatorHeight: CGFloat = 20 {
 		didSet {
 			self.rebuildDotLayers()
 		}
 	}
-	/// The diameter of the dot within the bounds
+
+	/// The size of the page indicator
+	public var pageIndicatorSize: CGSize {
+		get {
+			return CGSize(width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
+		}
+		set {
+			self.pageIndicatorWidth = newValue.width
+			self.pageIndicatorHeight = newValue.height
+		}
+
+	}
+
+	/// The diameter of the dot within the page indicator
 	@IBInspectable public var dotSize: CGFloat = 8 {
+		didSet {
+			self.rebuildDotLayers()
+		}
+	}
+
+	@objc public var orientation: Orientation = .horizontal {
 		didSet {
 			self.rebuildDotLayers()
 		}
@@ -110,7 +139,7 @@ public class DSFPagerControl: NSView {
 	/// Horizontal/Vertical display
 	@IBInspectable public var isHorizontal: Bool = true {
 		didSet {
-			self.rebuildDotLayers()
+			self.orientation = isHorizontal ? .horizontal : .vertical
 		}
 	}
 
@@ -171,11 +200,11 @@ public extension DSFPagerControl {
 	}
 
 	override var intrinsicContentSize: NSSize {
-		if isHorizontal {
-			return CGSize(width: self.dotBoundsWidth * CGFloat(self.pageCount), height: self.dotBoundsHeight)
-		}
-		else {
-			return CGSize(width: self.dotBoundsWidth, height: self.dotBoundsHeight * CGFloat(self.pageCount))
+		switch self.orientation {
+		case .horizontal:
+			return CGSize(width: self.pageIndicatorWidth * CGFloat(self.pageCount), height: self.pageIndicatorHeight)
+		case .vertical:
+			return CGSize(width: self.pageIndicatorWidth, height: self.pageIndicatorHeight * CGFloat(self.pageCount))
 		}
 	}
 
@@ -263,18 +292,18 @@ extension DSFPagerControl {
 
 	// Layout the dot layers
 	func relayoutLayers() {
-		if isHorizontal {
+		switch self.orientation {
+		case .horizontal:
 			var xOff: CGFloat = 0
 			self.dotLayers.forEach { l in
-				l.frame = CGRect(x: xOff, y: 0, width: self.dotBoundsWidth, height: self.dotBoundsHeight)
-				xOff += self.dotBoundsWidth
+				l.frame = CGRect(x: xOff, y: 0, width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
+				xOff += self.pageIndicatorWidth
 			}
-		}
-		else {
+		case .vertical:
 			var yOff: CGFloat = 0
 			self.dotLayers.forEach { l in
-				l.frame = CGRect(x: 0, y: yOff, width: self.dotBoundsWidth, height: self.dotBoundsHeight)
-				yOff += self.dotBoundsHeight
+				l.frame = CGRect(x: 0, y: yOff, width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
+				yOff += self.pageIndicatorHeight
 			}
 		}
 	}
@@ -316,13 +345,13 @@ public extension DSFPagerControl {
 			return
 		}
 
-		if isHorizontal {
+		switch self.orientation {
+		case .horizontal:
 			let div = self.frame.width / CGFloat(self.pageCount)
 			let point = self.convert(event.locationInWindow, from: nil)
 			let which = Int((point.x / div).rounded(.towardZero))
 			self.selectedPage = which
-		}
-		else {
+		case .vertical:
 			let div = self.frame.height / CGFloat(self.pageCount)
 			let point = self.convert(event.locationInWindow, from: nil)
 			let which = Int((point.y / div).rounded(.towardZero))
@@ -453,8 +482,8 @@ extension DSFPagerControl {
 
 			let ds: CGFloat = self.parent.dotSize
 
-			let xO = max(0, (self.parent.dotBoundsWidth - ds) / 2)
-			let yO = max(0, (self.parent.dotBoundsHeight - ds) / 2)
+			let xO = max(0, (self.parent.pageIndicatorWidth - ds) / 2)
+			let yO = max(0, (self.parent.pageIndicatorHeight - ds) / 2)
 
 			self.path = CGPath(ellipseIn: CGRect(x: xO, y: yO, width: ds, height: ds), transform: nil)
 		}
