@@ -10,27 +10,26 @@ import DSFPagerControl
 
 class ViewController: NSViewController {
 
-	@IBOutlet weak var customHorizontal: DSFPagerControl!
-	@IBOutlet weak var customVertical: DSFPagerControl!
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		// Do any additional setup after loading the view.
 
-		customHorizontal.selectedFillColorBlock = {
-			return .systemPink
-		}
-		customHorizontal.unselectedStrokeColorBlock = {
-			return .systemPurple
-		}
+		// Custom color blocks can be defined for customizing the colors
 
-		customVertical.selectedFillColorBlock = {
-			return .systemTeal
-		}
-		customVertical.unselectedStrokeColorBlock = {
-			return .systemBlue
-		}
+//		customHorizontal.selectedColorBlock = {
+//			return .systemPink
+//		}
+//		customHorizontal.unselectedColorBlock = {
+//			return .systemPurple
+//		}
+//
+//		customVertical.selectedColorBlock = {
+//			return .systemTeal
+//		}
+//		customVertical.unselectedColorBlock = {
+//			return .systemBlue
+//		}
 	}
 
 	override var representedObject: Any? {

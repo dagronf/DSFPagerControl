@@ -13,18 +13,18 @@
 
 import AppKit
 
-public extension DSFThemeManager {
+extension DSFThemeManager {
 
 	/// Detect visibility changes in the UI
 	class ChangeDetector: NSObject {
 
 		/// The theme manager being observed
-		public let theme: DSFThemeManager
+		let theme: DSFThemeManager
 
 		/// A callback for when the theme changes. Guaranteed to always be called on the main thread
-		public var themeChangeCallback: ((DSFThemeManager, DSFThemeManager.Change) -> Void)?
+		var themeChangeCallback: ((DSFThemeManager, DSFThemeManager.Change) -> Void)?
 
-		public init(themeManager: DSFThemeManager = DSFThemeManager.shared) {
+		init(themeManager: DSFThemeManager = DSFThemeManager.shared) {
 			self.theme = themeManager
 			super.init()
 			self.observer = self.theme.addObserver(queue: .main) { [weak self] notify in

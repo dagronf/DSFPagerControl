@@ -24,20 +24,10 @@
 //  SOFTWARE.
 //
 
-
-import Foundation
-
 #if os(macOS)
 
+import Foundation
 import AppKit
-
-/// The pager delegate protocol
-@objc public protocol DSFPagerControlHandling: NSObjectProtocol {
-	/// Called when the pager has been asked to change to a new page. Return false to cancel the change
-	func pagerControl(_ pager: DSFPagerControl, willMoveToPage: Int) -> Bool
-	/// Called when the pager changed to a new page
-	func pagerControl(_ pager: DSFPagerControl, didMoveToPage: Int)
-}
 
 /// A pager control
 @IBDesignable
@@ -68,19 +58,35 @@ public class DSFPagerControl: NSView {
 		}
 	}
 
-//	/// The color to use when drawing the selected dot
-//	@IBInspectable public var primaryColor: NSColor = .textColor {
-//		didSet {
-//			self.colorsDidChange()
-//		}
-//	}
-//
-//	/// The color to use when drawing a dot that's not selected
-//	@IBInspectable public var secondaryColor: NSColor = NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast ? .textColor : .placeholderTextColor {
-//		didSet {
-//			self.colorsDidChange()
-//		}
-//	}
+	/// The color to use when drawing the selected dot
+	@IBInspectable public var selectedColor: NSColor? = nil {
+		didSet {
+			if let s = selectedColor {
+				self.selectedColorBlock = {
+					return s
+				}
+			}
+			else {
+				selectedColorBlock = nil
+			}
+			self.colorsDidChange()
+		}
+	}
+
+	/// The color to use when drawing a dot that's not selected
+	@IBInspectable public var unselectedColor: NSColor? = nil {
+		didSet {
+			if let s = unselectedColor {
+				self.unselectedColorBlock = {
+					return s
+				}
+			}
+			else {
+				unselectedColorBlock = nil
+			}
+			self.colorsDidChange()
+		}
+	}
 
 	/// The width of each dot segment
 	@IBInspectable public var dotBoundsWidth: CGFloat = 20 {
@@ -109,27 +115,27 @@ public class DSFPagerControl: NSView {
 	}
 
 	/// A custom callback for retrieving the circle fill color to use for the selected page
-	public var selectedFillColorBlock: (() -> NSColor)? {
+	@objc public var selectedColorBlock: (() -> NSColor)? {
 		didSet {
 			self.colorsDidChange()
 		}
 	}
 
 	/// A custom callback for retrieving the circle stroke color to use for an unselected page
-	public var unselectedStrokeColorBlock: (() -> NSColor)? {
+	@objc public var unselectedColorBlock: (() -> NSColor)? {
 		didSet {
 			self.colorsDidChange()
 		}
 	}
 
 	/// Create
-	override init(frame frameRect: NSRect) {
+	@objc override public init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
 		self.setup()
 	}
 
 	/// Create
-	required init?(coder: NSCoder) {
+	@objc required public init?(coder: NSCoder) {
 		super.init(coder: coder)
 		self.setup()
 	}
@@ -144,27 +150,27 @@ public class DSFPagerControl: NSView {
 		}
 	}
 
-	var trackingArea: NSTrackingArea?
-
 	// The layers currently on display
 	private var dotLayers: [DotLayer] = []
-
+	// Handle theme changes
 	private let themeChangeDetector = DSFThemeManager.ChangeDetector()
+	// Tracking area for cursor changes
+	private var trackingArea: NSTrackingArea?
 }
 
 // MARK: - Layout and display
 
-extension DSFPagerControl {
+public extension DSFPagerControl {
 
-	public override var isFlipped: Bool {
+	override var isFlipped: Bool {
 		return true
 	}
 
-	override public var wantsUpdateLayer: Bool {
+	override var wantsUpdateLayer: Bool {
 		return true
 	}
 
-	override public var intrinsicContentSize: NSSize {
+	override var intrinsicContentSize: NSSize {
 		if isHorizontal {
 			return CGSize(width: self.dotBoundsWidth * CGFloat(self.pageCount), height: self.dotBoundsHeight)
 		}
@@ -173,9 +179,42 @@ extension DSFPagerControl {
 		}
 	}
 
+	override func updateLayer() {
+		super.updateLayer()
+		self.relayoutLayers()
+	}
+
+	override func prepareForInterfaceBuilder() {
+		self.rebuildDotLayers()
+		self.selectionDidChange()
+	}
+
+	override func updateTrackingAreas() {
+		super.updateTrackingAreas()
+
+		if let t = self.trackingArea {
+			self.removeTrackingArea(t)
+		}
+
+		if !self.allowsMouseSelection {
+			return
+		}
+
+		self.trackingArea = NSTrackingArea(
+			rect: self.bounds,
+			options: [.mouseEnteredAndExited, .activeInActiveApp],
+			owner: self,
+			userInfo: nil)
+		self.addTrackingArea(self.trackingArea!)
+	}
+}
+
+extension DSFPagerControl {
+
 	func setup() {
 		wantsLayer = true
 
+		// Detect system changes that will potentially affect our colors
 		self.themeChangeDetector.themeChangeCallback = { [weak self] (_, _) in
 			self?.colorsDidChange()
 		}
@@ -212,25 +251,6 @@ extension DSFPagerControl {
 		self.selectionDidChange()
 	}
 
-	public override func updateTrackingAreas() {
-		super.updateTrackingAreas()
-
-		if let t = self.trackingArea {
-			self.removeTrackingArea(t)
-		}
-
-		if !self.allowsMouseSelection {
-			return
-		}
-
-		self.trackingArea = NSTrackingArea(
-			rect: self.bounds,
-			options: [.mouseEnteredAndExited, .activeInActiveApp],
-			owner: self,
-			userInfo: nil)
-		self.addTrackingArea(self.trackingArea!)
-	}
-
 	public override func mouseEntered(with event: NSEvent) {
 		super.mouseEntered(with: event)
 		NSCursor.pointingHand.push()
@@ -257,16 +277,6 @@ extension DSFPagerControl {
 				yOff += self.dotBoundsHeight
 			}
 		}
-	}
-
-	override public func updateLayer() {
-		super.updateLayer()
-		self.relayoutLayers()
-	}
-
-	override public func prepareForInterfaceBuilder() {
-		self.rebuildDotLayers()
-		self.selectionDidChange()
 	}
 }
 
@@ -345,20 +355,18 @@ extension DSFPagerControl {
 
 extension DSFPagerControl {
 	var _selectedFillColor: NSColor {
-		if let s = self.selectedFillColorBlock {
+		if let s = self.selectedColorBlock {
 			return s()
 		}
-
-		let grey: NSColor = DSFThemeManager.IsDark ? .systemGray : .darkGray
-		return NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast ? .textColor : grey
+		return .textColor
 	}
 	var _unselectedStrokeColor: NSColor {
-		if let s = self.unselectedStrokeColorBlock {
+		if let s = self.unselectedColorBlock {
 			return s()
 		}
-
-		let grey: NSColor = DSFThemeManager.IsDark ? .systemGray : .darkGray
-		return NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast ? .textColor : grey
+		return DSFThemeManager.IsDark
+			? NSColor(deviceWhite: 0.3, alpha: 1)   // .darkGray
+			: NSColor(deviceWhite: 0.75, alpha: 1)  // .lightGray
 	}
 }
 
@@ -413,11 +421,11 @@ extension DSFPagerControl {
 
 		func updateDisplay() {
 
-			if #available(macOS 10.12, *) {
-				if NSWorkspace.shared.accessibilityDisplayShouldReduceMotion == true {
-					CATransaction.setDisableActions(true)
-				}
+			if NSWorkspace.shared.accessibilityDisplayShouldReduceMotion == true {
+				CATransaction.setDisableActions(true)
 			}
+
+			let isHighContrast = NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast
 
 			UsingEffectiveAppearance(of: self.parent) {
 				if isSelected {
@@ -425,8 +433,14 @@ extension DSFPagerControl {
 					self.strokeColor = self.parent._selectedFillColor.cgColor
 				}
 				else {
-					self.fillColor = .clear
-					self.strokeColor = self.parent._unselectedStrokeColor.cgColor
+					if isHighContrast {
+						self.strokeColor = self.parent._selectedFillColor.cgColor
+						self.fillColor = nil
+					}
+					else {
+						self.fillColor = self.parent._unselectedStrokeColor.cgColor
+						self.strokeColor = self.parent._unselectedStrokeColor.cgColor
+					}
 				}
 			}
 			self.lineWidth = 1

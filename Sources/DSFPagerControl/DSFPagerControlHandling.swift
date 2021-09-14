@@ -1,8 +1,7 @@
 //
-//  DSFDebounce.swift
+//  DSFPagerControlHandling.swift
 //
 //  Created by Darren Ford on 14/9/21.
-//  Copyright © 2021 Darren Ford. All rights reserved.
 //
 //  MIT License
 //
@@ -23,26 +22,18 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
+//
 
 import Foundation
-import Dispatch
 
-class DSFDebounce {
-	
-	// MARK: - Properties
-	private let queue = DispatchQueue.main
-	private var workItem = DispatchWorkItem(block: {})
-	private var interval: TimeInterval
-	
-	// MARK: - Initializer
-	init(seconds: TimeInterval) {
-		self.interval = seconds
-	}
-	
-	// MARK: - Debouncing function
-	func debounce(action: @escaping (() -> Void)) {
-		workItem.cancel()
-		workItem = DispatchWorkItem(block: { action() })
-		queue.asyncAfter(deadline: .now() + interval, execute: workItem)
-	}
+#if os(macOS)
+
+/// The pager delegate protocol
+@objc public protocol DSFPagerControlHandling: NSObjectProtocol {
+	/// Called when the pager has been asked to change to a new page. Return false to cancel the change
+	func pagerControl(_ pager: DSFPagerControl, willMoveToPage: Int) -> Bool
+	/// Called when the pager changed to a new page
+	func pagerControl(_ pager: DSFPagerControl, didMoveToPage: Int)
 }
+
+#endif

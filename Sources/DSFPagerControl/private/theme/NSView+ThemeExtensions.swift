@@ -29,14 +29,14 @@ import AppKit
 ///
 /// See [Discussion](https://dagronf.wordpress.com/2020/08/20/my-nscolor-colorset-colors-arent-changing-when-going-dark/)
 @inlinable
-public func UsingEffectiveAppearance(of view: NSView, perform block: () throws -> Void) rethrows {
+func UsingEffectiveAppearance(of view: NSView, perform block: () throws -> Void) rethrows {
 	let saved = NSAppearance.current
 	NSAppearance.current = view.effectiveAppearance
 	try block()
 	NSAppearance.current = saved
 }
 
-public extension NSView {
+extension NSView {
 	/// Perform a block using the effective appearance settings of view
 	///
 	/// See [Discussion](https://dagronf.wordpress.com/2020/08/20/my-nscolor-colorset-colors-arent-changing-when-going-dark/)

@@ -756,6 +756,12 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="dotBoundsHeight">
                                                 <real key="value" value="32"/>
                                             </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                                <color key="value" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="unselectedColor">
+                                                <color key="value" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
+                                            </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </customView>
                                 </subviews>
@@ -804,6 +810,12 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="dotBoundsWidth">
                                                 <real key="value" value="28"/>
                                             </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                                <color key="value" name="systemTealColor" catalog="System" colorSpace="catalog"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="unselectedColor">
+                                                <color key="value" name="systemIndigoColor" catalog="System" colorSpace="catalog"/>
+                                            </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </customView>
                                 </subviews>
@@ -824,10 +836,6 @@
                             <constraint firstItem="Gpx-09-Izh" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="uDw-6x-4n4"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="customHorizontal" destination="drP-gI-9c9" id="tRL-de-wSj"/>
-                        <outlet property="customVertical" destination="zEr-a3-bN9" id="Dqs-pt-xDY"/>
-                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
