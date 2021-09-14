@@ -345,18 +345,19 @@ public extension DSFPagerControl {
 			return
 		}
 
+		let point = self.convert(event.locationInWindow, from: nil)
+
+		let which: Int
 		switch self.orientation {
 		case .horizontal:
 			let div = self.frame.width / CGFloat(self.pageCount)
-			let point = self.convert(event.locationInWindow, from: nil)
-			let which = Int((point.x / div).rounded(.towardZero))
-			self.selectedPage = which
+			which = Int((point.x / div).rounded(.towardZero))
 		case .vertical:
 			let div = self.frame.height / CGFloat(self.pageCount)
-			let point = self.convert(event.locationInWindow, from: nil)
-			let which = Int((point.y / div).rounded(.towardZero))
-			self.selectedPage = which
+			which = Int((point.y / div).rounded(.towardZero))
 		}
+
+		self.moveToPage(which)
 	}
 }
 

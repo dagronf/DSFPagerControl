@@ -67,13 +67,11 @@ class ViewController: NSViewController {
 
 extension ViewController: DSFPagerControlHandling {
 	func pagerControl(_ pager: DSFPagerControl, willMoveToPage page: Int) -> Bool {
-		Swift.print("Want to change to page \(page)...")
+		Swift.print("Wanting to change to page \(page)...")
 		return true
 	}
 
 	func pagerControl(_ pager: DSFPagerControl, didMoveToPage page: Int) {
 		Swift.print("... New page is now \(page)")
 	}
-
-
 }

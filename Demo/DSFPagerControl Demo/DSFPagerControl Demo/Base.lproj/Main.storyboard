@@ -710,11 +710,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="586" height="436"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" misplaced="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gpx-09-Izh">
-                                <rect key="frame" x="20" y="42" width="162" height="374"/>
+                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gpx-09-Izh">
+                                <rect key="frame" x="20" y="26" width="162" height="390"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GEo-83-iTm">
-                                        <rect key="frame" x="-2" y="358" width="108" height="16"/>
+                                        <rect key="frame" x="-2" y="374" width="108" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Standard Control" id="Ygi-nS-R8R">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -722,7 +722,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yF2-B0-fVt" customClass="DSFPagerControl" customModule="DSFPagerControl">
-                                        <rect key="frame" x="0.0" y="286" width="162" height="64"/>
+                                        <rect key="frame" x="0.0" y="302" width="162" height="64"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="pageCount">
                                                 <integer key="value" value="6"/>
@@ -732,7 +732,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </customView>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crw-Dv-duf">
-                                        <rect key="frame" x="-2" y="262" width="94" height="16"/>
+                                        <rect key="frame" x="-2" y="278" width="94" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Custom Colors" id="aLk-eJ-yAY">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -740,7 +740,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drP-gI-9c9" customClass="DSFPagerControl" customModule="DSFPagerControl">
-                                        <rect key="frame" x="0.0" y="190" width="162" height="64"/>
+                                        <rect key="frame" x="0.0" y="206" width="162" height="64"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="pageCount">
                                                 <integer key="value" value="8"/>
@@ -759,8 +759,8 @@
                                         </userDefinedRuntimeAttributes>
                                     </customView>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WDR-hC-kp7" userLabel="Simple Combination">
-                                        <rect key="frame" x="-2" y="166" width="94" height="16"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Custom Colors" id="hTl-WO-Zft">
+                                        <rect key="frame" x="-2" y="166" width="132" height="32"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Use arrow buttons to change selection" id="hTl-WO-Zft">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -818,7 +818,8 @@
                                                     <userDefinedRuntimeAttribute type="number" keyPath="pageCount">
                                                         <integer key="value" value="5"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="NO"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="NO"/>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <outlet property="delegate" destination="XfG-lQ-9wD" id="MrV-3F-a9l"/>

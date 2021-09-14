@@ -1,6 +1,12 @@
 # DSFPagerControl
 
-A simple macOS pager control.
+<p align="center">
+   <img src="./art/dark.png?raw=true" width="130" />&nbsp;
+   <img src="./art/light.png?raw=true" width="130" />
+</p>
+
+
+<p align="center">A simple macOS pager control.</p>
 
 <p align="center">
     <img src="https://img.shields.io/github/v/tag/dagronf/DSFPagerControl" />
@@ -17,7 +23,7 @@ A simple macOS pager control.
 
 I was a bit surprised there isn't a built-in control for displaying a pager (the dots) given macOS has a NSPageController control.
 
-So here's a relatively simple drop-in version.
+So here's a relatively simple packaged drop-in version.
 
 ## Features
 
@@ -29,29 +35,32 @@ So here's a relatively simple drop-in version.
 * Optional keyboard selection support
 * Optional mouse selection support
 
-The control is designed to be driven either by interacting with the control, or externally 
+The control is designed to be driven by :- 
+* Direct interaction, for example using to drive the visible page of a theme selector.
+* Purely display, for example displaying the current page being displayed in an `NSPageController` instance
+* … or a combination of both! 
+
+## Installation
+
+Using Swift Package Manager, add `https://github.com/dagronf/DSFPagerControl` to your project.
 
 ## Properties
 
-Many of these properties are `@IBInspectable`, so you can set them directly within interface builder.
+Many of these properties are `@IBInspectable` so you can set them directly within interface builder when Apple fixes IBDesignable support for packaged NSViews (Boooo! - its only been five years - FB8358478).
+
+If you copy the package source files into your project IBDesignables will show as expected.
 
 | Name                     | Type           | Description                                         |
 |:-------------------------|:---------------|:----------------------------------------------------|
 | orientation              | `Orientation`  | Is the page control vertically or horizontally oriented? |
 | pageCount                | `Int`          | The number of page indicators to display in the control |
-| selectedPage             | `Int`          | The current page selection |
+| selectedPage             | `Int`          | The current page selection (Observable) |
 | selectedColor            | `NSColor?`     | The color to draw a selected page (nil to use default colors) |
 | unselectedColor          | `NSColor?`     | The color to draw an unselected page (nil to use default colors) |
 | boundsSize               | `CGSize`       | The size of the page indicator |
 | dotSize                  | `CGFloat`      | The size of the dot to be displayed in the center of the page indicator |
 | allowsKeyboardSelection  | `Bool`         | Allow the user to use the keyboard to focus and change the page selection |
 | allowsMouseSelection     | `Bool`         | Allow the user to use the mouse to change the page selection |
-
-## Observables
-
-The following properties are observable.
-
-* `selectedPage`
 
 ## Delegate
 
@@ -71,14 +80,14 @@ Called when the pager control has changed to a new page.
 
 ## User interaction
 
-The control supports both keyboard and mouse interactions. When the user interacts with the control you can decide whether to perform the change via the use of a delegate.
+The control optionally supports keyboard and mouse interactions. When the user interacts with the control you can decide whether to perform the change via the use of a delegate.
 
 ### Keyboard
 
-When `allowsKeyboardSelection` is true, the control will accept focus events.
+When `allowsKeyboardSelection` is true, the control will accept focus events and reacts to the following keys :-
 
-* Down/Right: Move to the next page (if possible)
-* Up/Left: Move to the previous page (if possible)
+* Up/Left: Move to the previous page
+* Down/Right: Move to the next page
 
 When a key is pressed, the delegate is called (`willMoveToPage`) to ask whether the change is valid. If so, the pager will update its display and call `didMoveToPage` on the delegate.
 
@@ -90,15 +99,17 @@ When the user clicks a page indicator, the delegate is called (`willMoveToPage`)
 
 ## Custom color support
 
-This control provides two block callbacks you can supply to return your own custom colors for selected and unselected states
+By default, DSFPagerControl supplies a standard color palette, adapting automatically to the user's light/dark modes and contrast settings.
+
+If you want to customize your display, the control provides two block callbacks you can supply to return your own custom colors for selected and unselected states.
 
 ### selectedColorBlock
 
-Provide a block that returns a custom color to be used when drawing the selected page indicator
+Provide a block that returns a custom color to be used when drawing the selected page indicator.
 
 ### unselectedColorBlock
 
-Provide a block that returns a custom color to be used when drawing the unselected page indicator
+Provide a block that returns a custom color to be used when drawing the unselected page indicator.
 
 ## Releases
 
@@ -108,7 +119,7 @@ Provide a block that returns a custom color to be used when drawing the unselect
 
 ## License
 
-MIT. Use it and abuse it for anything you want, just attribute my work. Let me know if you do use it somewhere, I'd love to hear about it!
+MIT. Use it and abuse it for anything you want, just attribute my work. Let me know if you do use it somewhere, it'd be great to hear about it!
 
 ```
 MIT License
