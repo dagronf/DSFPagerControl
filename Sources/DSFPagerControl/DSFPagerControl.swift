@@ -176,6 +176,16 @@ public class DSFPagerControl: NSView {
 		didSet {
 			self.selectionDidChange()
 			self.delegate?.pagerControl(self, didMoveToPage: self._selected)
+
+			if oldValue == 0 || self._selected == 0 {
+				self.willChangeValue(for: \.isFirstPage)
+				self.didChangeValue(for: \.isFirstPage)
+			}
+
+			if oldValue == self.pageCount - 1 || self._selected == self.pageCount - 1 {
+				self.willChangeValue(for: \.isLastPage)
+				self.didChangeValue(for: \.isLastPage)
+			}
 		}
 	}
 
@@ -366,12 +376,12 @@ public extension DSFPagerControl {
 public extension DSFPagerControl {
 
 	/// Is the selected page the first page?
-	@objc func isAtFirstPage() -> Bool {
+	@objc dynamic var isFirstPage: Bool {
 		return self.selectedPage == 0
 	}
 
 	/// Is the selected page the last page?
-	@objc func isAtLastPage() -> Bool {
+	@objc dynamic var isLastPage: Bool {
 		return self.selectedPage == self.pageCount - 1
 	}
 

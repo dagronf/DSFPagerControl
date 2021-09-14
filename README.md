@@ -62,6 +62,17 @@ If you copy the package source files into your project IBDesignables will show a
 | allowsKeyboardSelection  | `Bool`         | Allow the user to use the keyboard to focus and change the page selection |
 | allowsMouseSelection     | `Bool`         | Allow the user to use the mouse to change the page selection |
 
+## Observables
+
+These are member variables you can observe for changes
+
+| Name                     | Type     | Description                          |
+|:-------------------------|:---------|:-------------------------------------|
+| pageCount                | `Int`    | The number of pages                  |
+| selectedPage             | `Int`    | The selected page                    |
+| isFirstPage              | `Bool`   | Is the selection the first page?     |
+| isLastPage               | `Bool`   | Is the selection the last page?      |
+
 ## Delegate
 
 ```swift
@@ -112,6 +123,14 @@ Provide a block that returns a custom color to be used when drawing the selected
 Provide a block that returns a custom color to be used when drawing the unselected page indicator.
 
 ## Releases
+
+### 1.0.2
+
+* Added isFirstPage/isLastPage observables
+
+### 1.0.1
+
+* Added next/prev methods
 
 ### 1.0.0
 

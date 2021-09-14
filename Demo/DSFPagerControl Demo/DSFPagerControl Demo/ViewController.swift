@@ -46,8 +46,8 @@ class ViewController: NSViewController {
 	}
 
 	func updateDisplay() {
-		nextPageButton.isEnabled = !imagePager.isAtLastPage()
-		previousPageButton.isEnabled = !imagePager.isAtFirstPage()
+		nextPageButton.isEnabled = !imagePager.isLastPage
+		previousPageButton.isEnabled = !imagePager.isFirstPage
 	}
 
 	@IBAction func prevPage(_ sender: Any) {
