@@ -191,6 +191,15 @@ public class DSFPagerControl: NSView {
 
 	// The layers currently on display
 	private var dotLayers: [DotLayer] = []
+
+	// The frame containing the dots
+	var dotsFrame: CGRect {
+		guard let first = self.dotLayers.first else { return .zero }
+		return self.dotLayers.dropFirst().reduce(first.frame) { partialResult, l in
+			partialResult.union(l.frame)
+		}
+	}
+
 	// Handle theme changes
 	private let themeChangeDetector = DSFThemeManager.ChangeDetector()
 	// Tracking area for cursor changes
@@ -220,7 +229,10 @@ public extension DSFPagerControl {
 
 	override func updateLayer() {
 		super.updateLayer()
+
+		CATransaction.setDisableActions(true)
 		self.relayoutLayers()
+		CATransaction.commit()
 	}
 
 	override func prepareForInterfaceBuilder() {
@@ -240,7 +252,7 @@ public extension DSFPagerControl {
 		}
 
 		self.trackingArea = NSTrackingArea(
-			rect: self.bounds,
+			rect: self.dotsFrame,
 			options: [.mouseEnteredAndExited, .activeInActiveApp],
 			owner: self,
 			userInfo: nil)
@@ -251,7 +263,12 @@ public extension DSFPagerControl {
 extension DSFPagerControl {
 
 	func setup() {
-		wantsLayer = true
+
+		self.wantsLayer = true
+		self.layerContentsRedrawPolicy = .duringViewResize
+
+		self.layer!.borderColor = NSColor.systemRed.cgColor
+		self.layer!.borderWidth = 0.5
 
 		// Detect system changes that will potentially affect our colors
 		self.themeChangeDetector.themeChangeCallback = { [weak self] (_, _) in
@@ -279,7 +296,7 @@ extension DSFPagerControl {
 		self.dotLayers.removeAll()
 
 		(0 ..< self.pageCount).forEach { index in
-			let dl = DotLayer(parent: self)
+			let dl = DotLayer(index: index, parent: self)
 			self.layer!.addSublayer(dl)
 			self.dotLayers.append(dl)
 		}
@@ -304,15 +321,17 @@ extension DSFPagerControl {
 	func relayoutLayers() {
 		switch self.orientation {
 		case .horizontal:
+			let w = (self.bounds.width - (self.pageIndicatorWidth * CGFloat(self.dotLayers.count))) / 2
 			var xOff: CGFloat = 0
 			self.dotLayers.forEach { l in
-				l.frame = CGRect(x: xOff, y: 0, width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
+				l.frame = CGRect(x: w + xOff, y: 0, width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
 				xOff += self.pageIndicatorWidth
 			}
 		case .vertical:
+			let h = (self.bounds.height - (self.pageIndicatorHeight * CGFloat(self.dotLayers.count))) / 2
 			var yOff: CGFloat = 0
 			self.dotLayers.forEach { l in
-				l.frame = CGRect(x: 0, y: yOff, width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
+				l.frame = CGRect(x: 0, y: h + yOff, width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
 				yOff += self.pageIndicatorHeight
 			}
 		}
@@ -329,12 +348,12 @@ public extension DSFPagerControl {
 	}
 
 	override func drawFocusRingMask() {
-		let pth = NSBezierPath(roundedRect: self.bounds, xRadius: 4, yRadius: 4)
+		let pth = NSBezierPath(roundedRect: self.dotsFrame, xRadius: 4, yRadius: 4)
 		pth.fill()
 	}
 
 	override var focusRingMaskBounds: NSRect {
-		return self.bounds
+		return self.dotsFrame
 	}
 
 	override func keyDown(with event: NSEvent) {
@@ -356,18 +375,11 @@ public extension DSFPagerControl {
 		}
 
 		let point = self.convert(event.locationInWindow, from: nil)
-
-		let which: Int
-		switch self.orientation {
-		case .horizontal:
-			let div = self.frame.width / CGFloat(self.pageCount)
-			which = Int((point.x / div).rounded(.towardZero))
-		case .vertical:
-			let div = self.frame.height / CGFloat(self.pageCount)
-			which = Int((point.y / div).rounded(.towardZero))
+		guard let whichLayer = self.dotLayers.first(where: { $0.frame.contains(point) }) else {
+			return
 		}
 
-		self.moveToPage(which)
+		self.moveToPage(whichLayer.index)
 	}
 }
 
@@ -454,6 +466,7 @@ public extension DSFPagerControl {
 
 extension DSFPagerControl {
 	class DotLayer: CAShapeLayer {
+		let index: Int
 		unowned var parent: DSFPagerControl
 
 		var isSelected: Bool = false {
@@ -462,7 +475,8 @@ extension DSFPagerControl {
 			}
 		}
 
-		init(parent: DSFPagerControl) {
+		init(index: Int, parent: DSFPagerControl) {
+			self.index = index
 			self.parent = parent
 			super.init()
 			self.setup()
@@ -473,6 +487,7 @@ extension DSFPagerControl {
 				fatalError()
 			}
 			self.parent = e.parent
+			self.index = e.index
 			super.init(layer: layer)
 
 			self.setup()
