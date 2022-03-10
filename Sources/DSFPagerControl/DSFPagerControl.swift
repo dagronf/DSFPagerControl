@@ -43,7 +43,7 @@ public class DSFPagerControl: NSView {
 	}
 
 	/// The delegate to receive feedback
-	@IBOutlet weak var delegate: DSFPagerControlHandling?
+	@IBOutlet public weak var delegate: DSFPagerControlHandling?
 
 	/// Can the user use the keyboard to focus and change the selection?
 	@IBInspectable public var allowsKeyboardFocus: Bool = false
