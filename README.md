@@ -10,7 +10,7 @@
 
 <p align="center">
     <img src="https://img.shields.io/github/v/tag/dagronf/DSFPagerControl" />
-    <img src="https://img.shields.io/badge/macOS-10.13+-blue" />
+    <img src="https://img.shields.io/badge/macOS-10.11+-blue" />
     <img src="https://img.shields.io/badge/Xcode-12+-yellow" />
     <img src="https://img.shields.io/badge/Swift-5.1-orange.svg" />
     <img src="https://img.shields.io/badge/License-MIT-lightgrey" />

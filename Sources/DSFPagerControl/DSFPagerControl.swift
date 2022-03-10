@@ -267,9 +267,6 @@ extension DSFPagerControl {
 		self.wantsLayer = true
 		self.layerContentsRedrawPolicy = .duringViewResize
 
-		self.layer!.borderColor = NSColor.systemRed.cgColor
-		self.layer!.borderWidth = 0.5
-
 		// Detect system changes that will potentially affect our colors
 		self.themeChangeDetector.themeChangeCallback = { [weak self] (_, _) in
 			self?.colorsDidChange()
@@ -504,8 +501,12 @@ extension DSFPagerControl {
 
 		func updateDisplay() {
 
-			if NSWorkspace.shared.accessibilityDisplayShouldReduceMotion == true {
-				CATransaction.setDisableActions(true)
+			if #available(macOS 10.12, *) {
+				if NSWorkspace.shared.accessibilityDisplayShouldReduceMotion == true {
+					CATransaction.setDisableActions(true)
+				}
+			} else {
+				// Fallback on earlier versions
 			}
 
 			let isHighContrast = NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast
