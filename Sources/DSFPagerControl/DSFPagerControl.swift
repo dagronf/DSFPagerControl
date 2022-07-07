@@ -29,6 +29,8 @@
 import Foundation
 import AppKit
 
+import DSFAppearanceManager
+
 /// A pager control
 @IBDesignable
 public class DSFPagerControl: NSView {
@@ -169,6 +171,10 @@ public class DSFPagerControl: NSView {
 		self.setup()
 	}
 
+	deinit {
+		DSFAppearanceCache.shared.deregister(self)
+	}
+
 	// Private
 
 	// Internal selected value.
@@ -200,8 +206,6 @@ public class DSFPagerControl: NSView {
 		}
 	}
 
-	// Handle theme changes
-	private let themeChangeDetector = DSFThemeManager.ChangeDetector()
 	// Tracking area for cursor changes
 	private var trackingArea: NSTrackingArea?
 }
@@ -260,7 +264,7 @@ public extension DSFPagerControl {
 	}
 }
 
-extension DSFPagerControl {
+extension DSFPagerControl: DSFAppearanceCacheNotifiable {
 
 	func setup() {
 
@@ -268,11 +272,13 @@ extension DSFPagerControl {
 		self.layerContentsRedrawPolicy = .duringViewResize
 
 		// Detect system changes that will potentially affect our colors
-		self.themeChangeDetector.themeChangeCallback = { [weak self] (_, _) in
-			self?.colorsDidChange()
-		}
+		DSFAppearanceCache.shared.register(self)
 
 		self.rebuildDotLayers()
+	}
+
+	public func appearanceDidChange() {
+		self.colorsDidChange()
 	}
 
 	func selectionDidChange() {
@@ -441,7 +447,7 @@ extension DSFPagerControl {
 		if let s = self.unselectedColorBlock {
 			return s()
 		}
-		return DSFThemeManager.IsDark
+		return DSFAppearanceManager.IsDark
 			? NSColor(deviceWhite: 0.3, alpha: 1)   // .darkGray
 			: NSColor(deviceWhite: 0.75, alpha: 1)  // .lightGray
 	}
@@ -511,7 +517,7 @@ extension DSFPagerControl {
 
 			let isHighContrast = NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast
 
-			UsingEffectiveAppearance(of: self.parent) {
+			UsingEffectiveAppearance(of: self.parent) { _ in
 				if isSelected {
 					self.fillColor = self.parent._selectedFillColor.cgColor
 					self.strokeColor = self.parent._selectedFillColor.cgColor

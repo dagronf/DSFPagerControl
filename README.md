@@ -124,6 +124,11 @@ Provide a block that returns a custom color to be used when drawing the unselect
 
 ## Releases
 
+
+### 2.0.0
+
+* Update to use DSFAppearanceManager instead
+
 ### 1.0.2
 
 * Added isFirstPage/isLastPage observables
@@ -143,7 +148,7 @@ MIT. Use it and abuse it for anything you want, just attribute my work. Let me k
 ```
 MIT License
 
-Copyright (c) 2021 Darren Ford
+Copyright (c) 2022- Darren Ford
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
