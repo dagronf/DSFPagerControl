@@ -13,7 +13,7 @@ let package = Package(
 		.library(name: "DSFPagerControl-shared", type: .dynamic, targets: ["DSFPagerControl"]),
 	],
 	dependencies: [
-		.package(url: "https://github.com/dagronf/DSFAppearanceManager", from: "2.0.0"),
+		.package(url: "https://github.com/dagronf/DSFAppearanceManager", from: "3.0.0"),
 	],
 	targets: [
 		.target(

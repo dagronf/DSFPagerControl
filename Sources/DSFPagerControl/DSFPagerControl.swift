@@ -517,7 +517,7 @@ extension DSFPagerControl {
 
 			let isHighContrast = NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast
 
-			UsingEffectiveAppearance(of: self.parent) { _ in
+			self.parent.usingEffectiveAppearance {
 				if isSelected {
 					self.fillColor = self.parent._selectedFillColor.cgColor
 					self.strokeColor = self.parent._selectedFillColor.cgColor
