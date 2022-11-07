@@ -1,5 +1,4 @@
-// swift-tools-version:5.1
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version:5.3
 
 import PackageDescription
 
@@ -9,11 +8,12 @@ let package = Package(
 		.macOS(.v10_11)
 	],
 	products: [
-		.library(name: "DSFPagerControl", type: .static, targets: ["DSFPagerControl"]),
+		.library(name: "DSFPagerControl", targets: ["DSFPagerControl"]),
+		.library(name: "DSFPagerControl-static", type: .static, targets: ["DSFPagerControl"]),
 		.library(name: "DSFPagerControl-shared", type: .dynamic, targets: ["DSFPagerControl"]),
 	],
 	dependencies: [
-		.package(url: "https://github.com/dagronf/DSFAppearanceManager", from: "3.0.0"),
+		.package(url: "https://github.com/dagronf/DSFAppearanceManager", from: "3.3.0"),
 	],
 	targets: [
 		.target(
