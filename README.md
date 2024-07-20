@@ -122,25 +122,6 @@ Provide a block that returns a custom color to be used when drawing the selected
 
 Provide a block that returns a custom color to be used when drawing the unselected page indicator.
 
-## Releases
-
-
-### 2.0.0
-
-* Update to use DSFAppearanceManager instead
-
-### 1.0.2
-
-* Added isFirstPage/isLastPage observables
-
-### 1.0.1
-
-* Added next/prev methods
-
-### 1.0.0
-
-* Initial release
-
 ## License
 
 MIT. Use it and abuse it for anything you want, just attribute my work. Let me know if you do use it somewhere, it'd be great to hear about it!
@@ -148,7 +129,7 @@ MIT. Use it and abuse it for anything you want, just attribute my work. Let me k
 ```
 MIT License
 
-Copyright (c) 2022- Darren Ford
+Copyright (c) 2024- Darren Ford
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
