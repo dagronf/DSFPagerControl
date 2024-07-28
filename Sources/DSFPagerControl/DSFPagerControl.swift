@@ -208,7 +208,7 @@ public class DSFPagerControl: NSView {
 	}
 
 	// The layers currently on display
-	private var dotLayers: [DotLayer] = []
+	internal var dotLayers: [DotLayer] = []
 
 	// The frame containing the dots
 	var dotsFrame: CGRect {
@@ -331,71 +331,27 @@ extension DSFPagerControl: DSFAppearanceCacheNotifiable {
 
 	// Layout the dot layers
 	func relayoutLayers() {
-		CATransaction.setDisableActions(true)
-		switch self.orientation {
-		case .horizontal:
-			let w = (self.bounds.width - (self.pageIndicatorWidth * CGFloat(self.dotLayers.count))) / 2
-			var xOff: CGFloat = 0
-			self.dotLayers.forEach { l in
-				l.frame = CGRect(x: w + xOff, y: 0, width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
-				xOff += self.pageIndicatorWidth
-			}
-		case .vertical:
-			let h = (self.bounds.height - (self.pageIndicatorHeight * CGFloat(self.dotLayers.count))) / 2
-			var yOff: CGFloat = 0
-			self.dotLayers.forEach { l in
-				l.frame = CGRect(x: 0, y: h + yOff, width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
-				yOff += self.pageIndicatorHeight
+		CATransaction.withDisabledActions {
+			switch self.orientation {
+			case .horizontal:
+				let w = (self.bounds.width - (self.pageIndicatorWidth * CGFloat(self.dotLayers.count))) / 2
+				var xOff: CGFloat = 0
+				self.dotLayers.forEach { l in
+					l.frame = CGRect(x: w + xOff, y: 0, width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
+					xOff += self.pageIndicatorWidth
+				}
+			case .vertical:
+				let h = (self.bounds.height - (self.pageIndicatorHeight * CGFloat(self.dotLayers.count))) / 2
+				var yOff: CGFloat = 0
+				self.dotLayers.forEach { l in
+					l.frame = CGRect(x: 0, y: h + yOff, width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
+					yOff += self.pageIndicatorHeight
+				}
 			}
 		}
-		CATransaction.commit()
 	}
 }
 
-// MARK: - Keyboard and mouse handing
-
-import Carbon.HIToolbox
-
-public extension DSFPagerControl {
-	override var acceptsFirstResponder: Bool {
-		return allowsKeyboardFocus
-	}
-
-	override func drawFocusRingMask() {
-		let pth = NSBezierPath(roundedRect: self.dotsFrame, xRadius: 4, yRadius: 4)
-		pth.fill()
-	}
-
-	override var focusRingMaskBounds: NSRect {
-		return self.dotsFrame
-	}
-
-	override func keyDown(with event: NSEvent) {
-		// Handle some special chars
-		switch Int(event.keyCode) {
-		case kVK_LeftArrow, kVK_UpArrow:
-			self.moveToPreviousPage()
-		case kVK_RightArrow, kVK_DownArrow:
-			self.moveToNextPage()
-
-		default:
-			super.keyDown(with: event)
-		}
-	}
-
-	override func mouseDown(with event: NSEvent) {
-		if !allowsMouseSelection {
-			return
-		}
-
-		let point = self.convert(event.locationInWindow, from: nil)
-		guard let whichLayer = self.dotLayers.first(where: { $0.frame.contains(point) }) else {
-			return
-		}
-
-		self.moveToPage(whichLayer.index)
-	}
-}
 
 // MARK: - Page changing
 
@@ -426,7 +382,7 @@ public extension DSFPagerControl {
 	}
 }
 
-private extension DSFPagerControl {
+internal extension DSFPagerControl {
 	// Must be called with a valid page range
 	func moveToPage(_ page: Int) {
 		assert((0 ..< self.pageCount).contains(page))
@@ -517,35 +473,30 @@ extension DSFPagerControl {
 		}
 
 		func updateDisplay() {
-
-			if DSFAppearanceManager.ReduceMotion {
-				CATransaction.setDisableActions(true)
-			}
-
-			self.parent.usingEffectiveAppearance {
-				if isSelected {
-					self.fillColor = self.parent._selectedFillColor.cgColor
-					self.strokeColor = self.parent._selectedFillColor.cgColor
-				}
-				else {
-					if DSFAppearanceManager.IncreaseContrast {
+			CATransaction.withDisabledActions(DSFAppearanceManager.ReduceMotion) {
+				self.parent.usingEffectiveAppearance {
+					if isSelected {
+						self.fillColor = self.parent._selectedFillColor.cgColor
 						self.strokeColor = self.parent._selectedFillColor.cgColor
-						self.fillColor = nil
-						self.lineWidth = 1
-					}
-					else if self.parent.bordered {
-						self.strokeColor = self.parent._selectedFillColor.cgColor
-						self.fillColor = self.parent._unselectedStrokeColor.cgColor
-						self.lineWidth = 0.5
 					}
 					else {
-						self.fillColor = self.parent._unselectedStrokeColor.cgColor
-						self.strokeColor = self.parent._unselectedStrokeColor.cgColor
+						if DSFAppearanceManager.IncreaseContrast {
+							self.strokeColor = self.parent._selectedFillColor.cgColor
+							self.fillColor = nil
+							self.lineWidth = 1
+						}
+						else if self.parent.bordered {
+							self.strokeColor = self.parent._selectedFillColor.cgColor
+							self.fillColor = self.parent._unselectedStrokeColor.cgColor
+							self.lineWidth = 0.5
+						}
+						else {
+							self.fillColor = self.parent._unselectedStrokeColor.cgColor
+							self.strokeColor = self.parent._unselectedStrokeColor.cgColor
+						}
 					}
 				}
 			}
-
-			CATransaction.commit()
 		}
 
 		override func layoutSublayers() {
