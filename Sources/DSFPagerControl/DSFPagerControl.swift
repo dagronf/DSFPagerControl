@@ -245,10 +245,7 @@ public extension DSFPagerControl {
 
 	override func updateLayer() {
 		super.updateLayer()
-
-		//CATransaction.setDisableActions(true)
 		self.relayoutLayers()
-		//CATransaction.commit()
 	}
 
 	override func prepareForInterfaceBuilder() {
@@ -334,6 +331,7 @@ extension DSFPagerControl: DSFAppearanceCacheNotifiable {
 
 	// Layout the dot layers
 	func relayoutLayers() {
+		CATransaction.setDisableActions(true)
 		switch self.orientation {
 		case .horizontal:
 			let w = (self.bounds.width - (self.pageIndicatorWidth * CGFloat(self.dotLayers.count))) / 2
@@ -350,6 +348,7 @@ extension DSFPagerControl: DSFAppearanceCacheNotifiable {
 				yOff += self.pageIndicatorHeight
 			}
 		}
+		CATransaction.commit()
 	}
 }
 
