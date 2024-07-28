@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
 	name: "DSFPagerControl",
 	platforms: [
-		.macOS(.v10_11)
+		.macOS(.v10_13)
 	],
 	products: [
 		.library(name: "DSFPagerControl", targets: ["DSFPagerControl"]),

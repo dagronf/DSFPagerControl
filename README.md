@@ -57,6 +57,7 @@ If you copy the package source files into your project IBDesignables will show a
 | selectedPage             | `Int`          | The current page selection (Observable) |
 | selectedColor            | `NSColor?`     | The color to draw a selected page (nil to use default colors) |
 | unselectedColor          | `NSColor?`     | The color to draw an unselected page (nil to use default colors) |
+| bordered                 | `Bool`         | If true, draws a border around the unselected page indicators) |
 | boundsSize               | `CGSize`       | The size of the page indicator |
 | dotSize                  | `CGFloat`      | The size of the dot to be displayed in the center of the page indicator |
 | allowsKeyboardSelection  | `Bool`         | Allow the user to use the keyboard to focus and change the page selection |
@@ -88,6 +89,20 @@ func pagerControl(_ pager: DSFPagerControl, didMoveToPage page: Int)
 ```
 
 Called when the pager control has changed to a new page.
+
+## SwiftUI support
+
+You use `DSFPagerControlUI` to create a pager control within SwiftUI
+
+```swift
+DSFPagerControlUI(
+   pageCount: 10,
+   selectedPage: $selection,
+   allowsMouseSelection: true
+)
+```
+
+See the SwiftUI demo in the `Demo` subfolder.
 
 ## User interaction
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -713,7 +713,7 @@
                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gpx-09-Izh">
                                 <rect key="frame" x="20" y="72" width="162" height="390"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GEo-83-iTm">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GEo-83-iTm">
                                         <rect key="frame" x="-2" y="374" width="108" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Standard Control" id="Ygi-nS-R8R">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -729,9 +729,12 @@
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="YES"/>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="selectedPage">
+                                                <integer key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </customView>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crw-Dv-duf">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crw-Dv-duf">
                                         <rect key="frame" x="-2" y="278" width="94" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Custom Colors" id="aLk-eJ-yAY">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -758,7 +761,7 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="NO"/>
                                         </userDefinedRuntimeAttributes>
                                     </customView>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WDR-hC-kp7" userLabel="Simple Combination">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WDR-hC-kp7" userLabel="Simple Combination">
                                         <rect key="frame" x="-2" y="166" width="132" height="32"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Use arrow buttons to change selection" id="hTl-WO-Zft">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -922,6 +925,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="YES"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="YES"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isHorizontal" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="bordered" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </customView>
                         </subviews>
@@ -951,7 +955,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="NSGoBackTemplate" width="10" height="14"/>
-        <image name="NSGoForwardTemplate" width="10" height="14"/>
+        <image name="NSGoBackTemplate" width="12" height="17"/>
+        <image name="NSGoForwardTemplate" width="12" height="17"/>
     </resources>
 </document>

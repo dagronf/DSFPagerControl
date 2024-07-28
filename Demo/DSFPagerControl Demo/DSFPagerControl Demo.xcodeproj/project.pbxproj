@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,11 @@
 		2387717E26F0232E00397B5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2387717D26F0232E00397B5F /* Assets.xcassets */; };
 		2387718126F0232E00397B5F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2387717F26F0232E00397B5F /* Main.storyboard */; };
 		2387718C26F0235000397B5F /* DSFPagerControl in Frameworks */ = {isa = PBXBuildFile; productRef = 2387718B26F0235000397B5F /* DSFPagerControl */; };
+		23EBC44D2C4BB6360045A140 /* Pager_SwiftUI_DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EBC44C2C4BB6360045A140 /* Pager_SwiftUI_DemoApp.swift */; };
+		23EBC44F2C4BB6360045A140 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EBC44E2C4BB6360045A140 /* ContentView.swift */; };
+		23EBC4512C4BB6370045A140 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23EBC4502C4BB6370045A140 /* Assets.xcassets */; };
+		23EBC4542C4BB6370045A140 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23EBC4532C4BB6370045A140 /* Preview Assets.xcassets */; };
+		23EBC45B2C4BB6B80045A140 /* DSFPagerControl in Frameworks */ = {isa = PBXBuildFile; productRef = 23EBC45A2C4BB6B80045A140 /* DSFPagerControl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +28,13 @@
 		2387718226F0232E00397B5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2387718326F0232E00397B5F /* DSFPagerControl_Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DSFPagerControl_Demo.entitlements; sourceTree = "<group>"; };
 		2387718926F0233500397B5F /* DSFPagerControl */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DSFPagerControl; path = ../..; sourceTree = "<group>"; };
+		23EBC44A2C4BB6360045A140 /* Pager SwiftUI Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pager SwiftUI Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		23EBC44C2C4BB6360045A140 /* Pager_SwiftUI_DemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pager_SwiftUI_DemoApp.swift; sourceTree = "<group>"; };
+		23EBC44E2C4BB6360045A140 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		23EBC4502C4BB6370045A140 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		23EBC4532C4BB6370045A140 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		23EBC4552C4BB6370045A140 /* Pager_SwiftUI_Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pager_SwiftUI_Demo.entitlements; sourceTree = "<group>"; };
+		23EBC4592C4BB6B20045A140 /* Pager-SwiftUI-Demo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Pager-SwiftUI-Demo-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +46,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		23EBC4472C4BB6360045A140 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23EBC45B2C4BB6B80045A140 /* DSFPagerControl in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -42,6 +62,7 @@
 			children = (
 				2387718926F0233500397B5F /* DSFPagerControl */,
 				2387717826F0232E00397B5F /* DSFPagerControl Demo */,
+				23EBC44B2C4BB6360045A140 /* Pager SwiftUI Demo */,
 				2387717726F0232E00397B5F /* Products */,
 				2387718A26F0235000397B5F /* Frameworks */,
 			);
@@ -51,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				2387717626F0232E00397B5F /* DSFPagerControl Demo.app */,
+				23EBC44A2C4BB6360045A140 /* Pager SwiftUI Demo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,6 +95,27 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		23EBC44B2C4BB6360045A140 /* Pager SwiftUI Demo */ = {
+			isa = PBXGroup;
+			children = (
+				23EBC4592C4BB6B20045A140 /* Pager-SwiftUI-Demo-Info.plist */,
+				23EBC44C2C4BB6360045A140 /* Pager_SwiftUI_DemoApp.swift */,
+				23EBC44E2C4BB6360045A140 /* ContentView.swift */,
+				23EBC4502C4BB6370045A140 /* Assets.xcassets */,
+				23EBC4552C4BB6370045A140 /* Pager_SwiftUI_Demo.entitlements */,
+				23EBC4522C4BB6370045A140 /* Preview Content */,
+			);
+			path = "Pager SwiftUI Demo";
+			sourceTree = "<group>";
+		};
+		23EBC4522C4BB6370045A140 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				23EBC4532C4BB6370045A140 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -98,17 +141,40 @@
 			productReference = 2387717626F0232E00397B5F /* DSFPagerControl Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		23EBC4492C4BB6360045A140 /* Pager SwiftUI Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23EBC4582C4BB6370045A140 /* Build configuration list for PBXNativeTarget "Pager SwiftUI Demo" */;
+			buildPhases = (
+				23EBC4462C4BB6360045A140 /* Sources */,
+				23EBC4472C4BB6360045A140 /* Frameworks */,
+				23EBC4482C4BB6360045A140 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pager SwiftUI Demo";
+			packageProductDependencies = (
+				23EBC45A2C4BB6B80045A140 /* DSFPagerControl */,
+			);
+			productName = "Pager SwiftUI Demo";
+			productReference = 23EBC44A2C4BB6360045A140 /* Pager SwiftUI Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		2387716E26F0232E00397B5F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1250;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
 					2387717526F0232E00397B5F = {
 						CreatedOnToolsVersion = 12.5.1;
+					};
+					23EBC4492C4BB6360045A140 = {
+						CreatedOnToolsVersion = 15.4;
 					};
 				};
 			};
@@ -126,6 +192,7 @@
 			projectRoot = "";
 			targets = (
 				2387717526F0232E00397B5F /* DSFPagerControl Demo */,
+				23EBC4492C4BB6360045A140 /* Pager SwiftUI Demo */,
 			);
 		};
 /* End PBXProject section */
@@ -140,6 +207,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		23EBC4482C4BB6360045A140 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23EBC4542C4BB6370045A140 /* Preview Assets.xcassets in Resources */,
+				23EBC4512C4BB6370045A140 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -149,6 +225,15 @@
 			files = (
 				2387717C26F0232E00397B5F /* ViewController.swift in Sources */,
 				2387717A26F0232E00397B5F /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23EBC4462C4BB6360045A140 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23EBC44F2C4BB6360045A140 /* ContentView.swift in Sources */,
+				23EBC44D2C4BB6360045A140 /* Pager_SwiftUI_DemoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +408,75 @@
 			};
 			name = Release;
 		};
+		23EBC4562C4BB6370045A140 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "Pager SwiftUI Demo/Pager_SwiftUI_Demo.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Pager SwiftUI Demo/Preview Content\"";
+				DEVELOPMENT_TEAM = 3L6RK3LGGW;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Pager-SwiftUI-Demo-Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.dagronf.Pager-SwiftUI-Demo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		23EBC4572C4BB6370045A140 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "Pager SwiftUI Demo/Pager_SwiftUI_Demo.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Pager SwiftUI Demo/Preview Content\"";
+				DEVELOPMENT_TEAM = 3L6RK3LGGW;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Pager-SwiftUI-Demo-Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.dagronf.Pager-SwiftUI-Demo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -344,10 +498,23 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		23EBC4582C4BB6370045A140 /* Build configuration list for PBXNativeTarget "Pager SwiftUI Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				23EBC4562C4BB6370045A140 /* Debug */,
+				23EBC4572C4BB6370045A140 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		2387718B26F0235000397B5F /* DSFPagerControl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DSFPagerControl;
+		};
+		23EBC45A2C4BB6B80045A140 /* DSFPagerControl */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DSFPagerControl;
 		};

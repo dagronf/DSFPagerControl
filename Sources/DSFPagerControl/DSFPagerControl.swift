@@ -41,15 +41,24 @@ public class DSFPagerControl: NSView {
 	@IBOutlet public weak var delegate: DSFPagerControlHandling?
 
 	/// Can the user use the keyboard to focus and change the selection?
-	@IBInspectable public var allowsKeyboardFocus: Bool = false
+	@IBInspectable public var allowsKeyboardFocus: Bool = false {
+		didSet {
+			self.needsLayout = true
+			self.needsDisplay = true
+		}
+	}
 
 	/// Can the user use the mouse to change the selection?
 	@IBInspectable public var allowsMouseSelection: Bool = false
 
 	/// The number of pages within the control
-	@IBInspectable public dynamic var pageCount: Int = 0 {
-		didSet {
-			self.rebuildDotLayers()
+	@IBInspectable public dynamic var pageCount: Int {
+		get { self._pageCount }
+		set {
+			if newValue != self._pageCount {
+				self._pageCount = newValue
+				self.rebuildDotLayers()
+			}
 		}
 	}
 
@@ -89,6 +98,13 @@ public class DSFPagerControl: NSView {
 			else {
 				unselectedColorBlock = nil
 			}
+			self.colorsDidChange()
+		}
+	}
+
+	/// Uses the selected color to draw a 0.5px border around each unselected page dot
+	@IBInspectable public var bordered: Bool = false {
+		didSet {
 			self.colorsDidChange()
 		}
 	}
@@ -170,6 +186,9 @@ public class DSFPagerControl: NSView {
 
 	// Private
 
+	// Internal page count
+	private var _pageCount: Int = 0
+
 	// Internal selected value.
 	private var _selected: Int = 0 {
 		didSet {
@@ -227,9 +246,9 @@ public extension DSFPagerControl {
 	override func updateLayer() {
 		super.updateLayer()
 
-		CATransaction.setDisableActions(true)
+		//CATransaction.setDisableActions(true)
 		self.relayoutLayers()
-		CATransaction.commit()
+		//CATransaction.commit()
 	}
 
 	override func prepareForInterfaceBuilder() {
@@ -500,15 +519,9 @@ extension DSFPagerControl {
 
 		func updateDisplay() {
 
-			if #available(macOS 10.12, *) {
-				if NSWorkspace.shared.accessibilityDisplayShouldReduceMotion == true {
-					CATransaction.setDisableActions(true)
-				}
-			} else {
-				// Fallback on earlier versions
+			if DSFAppearanceManager.ReduceMotion {
+				CATransaction.setDisableActions(true)
 			}
-
-			let isHighContrast = NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast
 
 			self.parent.usingEffectiveAppearance {
 				if isSelected {
@@ -516,9 +529,15 @@ extension DSFPagerControl {
 					self.strokeColor = self.parent._selectedFillColor.cgColor
 				}
 				else {
-					if isHighContrast {
+					if DSFAppearanceManager.IncreaseContrast {
 						self.strokeColor = self.parent._selectedFillColor.cgColor
 						self.fillColor = nil
+						self.lineWidth = 1
+					}
+					else if self.parent.bordered {
+						self.strokeColor = self.parent._selectedFillColor.cgColor
+						self.fillColor = self.parent._unselectedStrokeColor.cgColor
+						self.lineWidth = 0.5
 					}
 					else {
 						self.fillColor = self.parent._unselectedStrokeColor.cgColor
@@ -526,7 +545,6 @@ extension DSFPagerControl {
 					}
 				}
 			}
-			self.lineWidth = 1
 
 			CATransaction.commit()
 		}
