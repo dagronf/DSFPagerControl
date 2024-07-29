@@ -21,6 +21,7 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 	private let selectedColor: Color?
 	private let unselectedColor: Color?
 	private let bordered: Bool
+	private let disabled: Bool
 
 	/// Create a pager control
 	/// - Parameters:
@@ -40,7 +41,8 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 		allowsKeyboardSelection: Bool = false,
 		selectedColor: Color? = nil,
 		unselectedColor: Color? = nil,
-		bordered: Bool = false
+		bordered: Bool = false,
+		disabled: Bool = false
 	) {
 		self.indicatorShape = indicatorShape
 		self.pageCount = pageCount
@@ -50,6 +52,7 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 		self.allowsMouseSelection = allowsMouseSelection
 		self.allowsKeyboardSelection = allowsKeyboardSelection
 		self.bordered = bordered
+		self.disabled = disabled
 	}
 
 	public init(
@@ -60,7 +63,8 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 		allowsKeyboardSelection: Bool = false,
 		selectedColor: Color? = nil,
 		unselectedColor: Color? = nil,
-		bordered: Bool = false
+		bordered: Bool = false,
+		disabled: Bool = false
 	) {
 		let shape: DSFPagerControlIndicatorShape = (orientation == .horizontal)
 			? DSFPagerControl.HorizontalIndicatorShape()
@@ -73,7 +77,8 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 			allowsKeyboardSelection: allowsKeyboardSelection,
 			selectedColor: selectedColor,
 			unselectedColor: unselectedColor,
-			bordered: bordered
+			bordered: bordered,
+			disabled: disabled
 		)
 	}
 
@@ -91,6 +96,7 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 		p.allowsMouseSelection = self.allowsMouseSelection
 		p.allowsKeyboardFocus = self.allowsKeyboardSelection
 		p.bordered = self.bordered
+		p.isEnabled = !self.disabled
 		if let s = self.selectedColor {
 			p.selectedColor = NSColor(s)
 		}
@@ -132,6 +138,10 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 
 		if self.bordered != nsView.bordered {
 			nsView.bordered = self.bordered
+		}
+
+		if self.disabled != !nsView.isEnabled {
+			nsView.isEnabled = !self.disabled
 		}
 
 		if let c = self.selectedColor {

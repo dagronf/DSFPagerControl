@@ -29,7 +29,7 @@ import Carbon.HIToolbox
 public extension DSFPagerControl {
 
 	override var acceptsFirstResponder: Bool {
-		return allowsKeyboardFocus
+		return self.allowsKeyboardFocus && self.isEnabled
 	}
 
 	override func drawFocusRingMask() {
@@ -54,12 +54,14 @@ public extension DSFPagerControl {
 	}
 
 	override func mouseDown(with event: NSEvent) {
-		if self.allowsMouseSelection == false {
+		if !self.isEnabled || self.allowsMouseSelection == false {
+			super.mouseDown(with: event)
 			return
 		}
 
 		let point = self.convert(event.locationInWindow, from: nil)
 		guard let whichLayer = self.dotLayers.first(where: { $0.frame.contains(point) }) else {
+			super.mouseDown(with: event)
 			return
 		}
 

@@ -57,6 +57,13 @@ public class DSFPagerControl: NSView {
 		}
 	}
 
+	/// A Boolean value that indicates whether the receiver reacts to input events
+	@IBInspectable public var isEnabled: Bool = true {
+		didSet {
+			self.colorsDidChange()
+		}
+	}
+
 	/// The currently selected page in the control
 	@IBInspectable public dynamic var selectedPage: Int {
 		get {
@@ -272,6 +279,8 @@ public extension DSFPagerControl {
 			return
 		}
 
+		guard self.isEnabled else { return }
+
 		self.trackingArea = NSTrackingArea(
 			rect: self.dotsFrame,
 			options: [.mouseEnteredAndExited, .activeInActiveApp],
@@ -483,6 +492,8 @@ extension DSFPagerControl {
 
 		func updateDisplay() {
 			CATransaction.withDisabledActions(DSFAppearanceManager.ReduceMotion) {
+
+				self.opacity = self.parent.isEnabled ? 1.0 : 0.2
 
 				self.parent.usingEffectiveAppearance {
 					if self.isSelected {

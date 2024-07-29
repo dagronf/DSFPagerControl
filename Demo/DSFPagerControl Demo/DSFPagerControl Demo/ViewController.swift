@@ -14,6 +14,11 @@ class ViewController: NSViewController {
 	@IBOutlet weak var previousPageButton: NSButton!
 	@IBOutlet weak var nextPageButton: NSButton!
 
+	@IBOutlet weak var enablablePagerControl: DSFPagerControl!
+	@IBAction func enabledDidChange(_ sender: NSButton) {
+		enablablePagerControl.isEnabled = sender.state == .on
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 

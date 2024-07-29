@@ -944,7 +944,7 @@
                                         <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="YES"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="selectedPage">
                                         <integer key="value" value="3"/>
                                     </userDefinedRuntimeAttribute>
@@ -959,6 +959,16 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </customView>
+                            <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mS6-K9-g8a">
+                                <rect key="frame" x="202" y="252" width="75" height="18"/>
+                                <buttonCell key="cell" type="check" title="Enabled" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="H5s-MS-Ded">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="enabledDidChange:" target="XfG-lQ-9wD" id="JzJ-pN-jB1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="QM4-di-nj1" firstAttribute="top" secondItem="Gpx-09-Izh" secondAttribute="top" id="6ma-aa-A8R"/>
@@ -972,11 +982,14 @@
                             <constraint firstItem="gGA-xy-QmS" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Gpx-09-Izh" secondAttribute="bottom" constant="8" symbolic="YES" id="jz5-Rl-Ddb"/>
                             <constraint firstItem="gGA-xy-QmS" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="m6s-Yx-bmr"/>
                             <constraint firstAttribute="bottom" secondItem="gGA-xy-QmS" secondAttribute="bottom" constant="20" symbolic="YES" id="nEK-el-5gH"/>
+                            <constraint firstItem="mS6-K9-g8a" firstAttribute="top" secondItem="dgM-ak-pae" secondAttribute="bottom" constant="8" symbolic="YES" id="o92-r0-JVQ"/>
                             <constraint firstItem="Gpx-09-Izh" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="uDw-6x-4n4"/>
                             <constraint firstAttribute="trailing" secondItem="gGA-xy-QmS" secondAttribute="trailing" constant="20" symbolic="YES" id="vEW-Q5-ukW"/>
+                            <constraint firstItem="mS6-K9-g8a" firstAttribute="leading" secondItem="dgM-ak-pae" secondAttribute="leading" id="wbJ-8P-hIK"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="enablablePagerControl" destination="dgM-ak-pae" id="5Fq-KT-xpf"/>
                         <outlet property="imagePager" destination="zMN-5O-e5V" id="blm-MP-IU0"/>
                         <outlet property="nextPageButton" destination="SXm-Z3-qDM" id="IJG-qe-LIx"/>
                         <outlet property="previousPageButton" destination="YZC-IM-XJG" id="Csa-HI-wuE"/>

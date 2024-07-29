@@ -31,6 +31,8 @@ struct ContentView: View {
 
 	@State var drawBorder = false
 
+	@State var disabled = false
+
 	var body: some View {
 		VStack {
 			ScrollViewReader { value in
@@ -143,6 +145,21 @@ struct ContentView: View {
 					unselectedColor: .purple.opacity(0.2),
 					bordered: drawBorder
 				)
+
+				Divider()
+
+				HStack {
+					DSFPagerControlUI(
+						pageCount: 5,
+						selectedPage: .constant(3),
+						allowsMouseSelection: true,
+						allowsKeyboardSelection: true,
+						bordered: drawBorder,
+						disabled: disabled
+					)
+
+					Toggle("Disabled", isOn: $disabled)
+				}
 			}
 		}
 		.padding()
