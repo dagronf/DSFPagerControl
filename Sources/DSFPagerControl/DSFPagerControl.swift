@@ -60,7 +60,11 @@ public class DSFPagerControl: NSView {
 	/// A Boolean value that indicates whether the receiver reacts to input events
 	@IBInspectable public var isEnabled: Bool = true {
 		didSet {
+			self.needsLayout = true
 			self.colorsDidChange()
+			if self.isEnabled == false, self.window?.firstResponder == self {
+				self.window?.makeFirstResponder(nil)
+			}
 		}
 	}
 
@@ -70,7 +74,7 @@ public class DSFPagerControl: NSView {
 			return self._selected
 		}
 		set {
-			self._selected = self.clamped(newValue)
+			self.moveToPage(newValue)
 		}
 	}
 
@@ -390,35 +394,42 @@ public extension DSFPagerControl {
 	///
 	/// Will call the delegate methods to validate the change
 	@objc func moveToNextPage() {
-		self.moveToPage(self.clamped(self.selectedPage + 1))
+		if _selected == self.pageCount - 1 {
+			NSSound.beep()
+			return
+		}
+		self.moveToPage(self.selectedPage + 1)
 	}
 
 	/// Move to the previous page in the pager. If the current page is the first page, does nothing
 	///
 	/// Will call the delegate methods to validate the change
 	@objc func moveToPreviousPage() {
-		self.moveToPage(self.clamped(self.selectedPage - 1))
+		if _selected == 0 {
+			NSSound.beep()
+			return
+		}
+		self.moveToPage(self.selectedPage - 1)
 	}
 }
 
 internal extension DSFPagerControl {
 	// Must be called with a valid page range
 	func moveToPage(_ page: Int) {
-		assert((0 ..< self.pageCount).contains(page))
 
-		if self.selectedPage == page {
+		if self._selected == page {
 			return
 		}
-		if self.delegate?.pagerControl(self, willMoveToPage: page) ?? true {
-			self.selectedPage = page
+
+		guard (0 ..< self.pageCount).contains(page) else {
+			NSSound.beep()
+			return
 		}
 
-		NSAccessibility.post(element: self, notification: .selectedChildrenChanged)
-	}
-
-	// Clamp page to the current page count
-	func clamped(_ page: Int) -> Int {
-		max(0, min(self.pageCount - 1, page))
+		if self.delegate?.pagerControl(self, willMoveToPage: page) ?? true {
+			self._selected = page
+			NSAccessibility.post(element: self, notification: .selectedChildrenChanged)
+		}
 	}
 }
 

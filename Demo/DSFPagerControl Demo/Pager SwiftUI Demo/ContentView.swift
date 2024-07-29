@@ -28,6 +28,7 @@ struct ContentView: View {
 	@State var pageCount = 10
 
 	@State var selectedCustom = 3
+	@State var selectedCustom2 = 3
 
 	@State var drawBorder = false
 
@@ -151,7 +152,7 @@ struct ContentView: View {
 				HStack {
 					DSFPagerControlUI(
 						pageCount: 5,
-						selectedPage: .constant(3),
+						selectedPage: $selectedCustom2,
 						allowsMouseSelection: true,
 						allowsKeyboardSelection: true,
 						bordered: drawBorder,
