@@ -48,6 +48,17 @@ public extension DSFPagerControl {
 		case kVK_RightArrow, kVK_DownArrow:
 			self.moveToNextPage()
 
+		case kVK_ANSI_0, kVK_ANSI_Keypad0: self.selectedPage = self.clamped(0)
+		case kVK_ANSI_1, kVK_ANSI_Keypad1: self.selectedPage = self.clamped(1)
+		case kVK_ANSI_2, kVK_ANSI_Keypad2: self.selectedPage = self.clamped(2)
+		case kVK_ANSI_3, kVK_ANSI_Keypad3: self.selectedPage = self.clamped(3)
+		case kVK_ANSI_4, kVK_ANSI_Keypad4: self.selectedPage = self.clamped(4)
+		case kVK_ANSI_5, kVK_ANSI_Keypad5: self.selectedPage = self.clamped(5)
+		case kVK_ANSI_6, kVK_ANSI_Keypad6: self.selectedPage = self.clamped(6)
+		case kVK_ANSI_7, kVK_ANSI_Keypad7: self.selectedPage = self.clamped(7)
+		case kVK_ANSI_8, kVK_ANSI_Keypad8: self.selectedPage = self.clamped(8)
+		case kVK_ANSI_9, kVK_ANSI_Keypad9: self.selectedPage = self.clamped(9)
+
 		default:
 			super.keyDown(with: event)
 		}
