@@ -28,15 +28,6 @@ import DSFAppearanceManager
 @IBDesignable
 public class DSFPagerControl: NSView {
 
-	/// The orientation for the control
-	@objc(DSFPagerControlOrientation)
-	public enum Orientation: Int {
-		/// Horizontal orientation
-		case horizontal = 0
-		/// Vertical orientation
-		case vertical   = 1
-	}
-
 	/// The delegate to receive feedback
 	@IBOutlet public weak var delegate: DSFPagerControlHandling?
 
@@ -49,7 +40,11 @@ public class DSFPagerControl: NSView {
 	}
 
 	/// Can the user use the mouse to change the selection?
-	@IBInspectable public var allowsMouseSelection: Bool = false
+	@IBInspectable public var allowsMouseSelection: Bool = false {
+		didSet {
+			self.updateTrackingAreas()
+		}
+	}
 
 	/// The number of pages within the control
 	@IBInspectable public dynamic var pageCount: Int {
@@ -69,6 +64,19 @@ public class DSFPagerControl: NSView {
 		}
 		set {
 			self._selected = self.clamped(newValue)
+		}
+	}
+
+	/// The indicator shape
+	@objc public var indicatorShape: DSFPagerControlIndicatorShape = DefaultHorizontalIndicatorShape() {
+		didSet {
+			self.rebuildDotLayers()
+		}
+	}
+
+	@IBInspectable public var isHorizontal: Bool = true {
+		didSet {
+			self.indicatorShape = self.isHorizontal ? DefaultHorizontalIndicatorShape() : DefaultVerticalIndicatorShape()
 		}
 	}
 
@@ -109,51 +117,6 @@ public class DSFPagerControl: NSView {
 		}
 	}
 
-	/// The width of each page indicator
-	@IBInspectable public var pageIndicatorWidth: CGFloat = 20 {
-		didSet {
-			self.rebuildDotLayers()
-		}
-	}
-	/// The height of each page indicator
-	@IBInspectable public var pageIndicatorHeight: CGFloat = 20 {
-		didSet {
-			self.rebuildDotLayers()
-		}
-	}
-
-	/// The size of the page indicator
-	public var pageIndicatorSize: CGSize {
-		get {
-			return CGSize(width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
-		}
-		set {
-			self.pageIndicatorWidth = newValue.width
-			self.pageIndicatorHeight = newValue.height
-		}
-
-	}
-
-	/// The diameter of the dot within the page indicator
-	@IBInspectable public var dotSize: CGFloat = 8 {
-		didSet {
-			self.rebuildDotLayers()
-		}
-	}
-
-	@objc public var orientation: Orientation = .horizontal {
-		didSet {
-			self.rebuildDotLayers()
-		}
-	}
-
-	/// Horizontal/Vertical display
-	@IBInspectable public var isHorizontal: Bool = true {
-		didSet {
-			self.orientation = isHorizontal ? .horizontal : .vertical
-		}
-	}
-
 	/// A custom callback for retrieving the circle fill color to use for the selected page
 	@objc public var selectedColorBlock: (() -> NSColor)? {
 		didSet {
@@ -167,6 +130,50 @@ public class DSFPagerControl: NSView {
 			self.colorsDidChange()
 		}
 	}
+
+
+	////////
+	
+	/// The width of each page indicator. Only applies to the default indicator shapes
+	@IBInspectable public var pageIndicatorWidth: CGFloat = 20 {
+		didSet {
+			if let s = self.indicatorShape as? DefaultHorizontalIndicatorShape {
+				s.size = CGSize(width: pageIndicatorWidth, height: s.size.height)
+			}
+			if let s = self.indicatorShape as? DefaultVerticalIndicatorShape {
+				s.size = CGSize(width: pageIndicatorWidth, height: s.size.height)
+			}
+			self.rebuildDotLayers()
+		}
+	}
+
+	/// The height of each page indicator. Only applies to the default indicator shapes
+	@IBInspectable public var pageIndicatorHeight: CGFloat = 20 {
+		didSet {
+			if let s = self.indicatorShape as? DefaultHorizontalIndicatorShape {
+				s.size = CGSize(width: s.size.width, height: pageIndicatorHeight)
+			}
+			if let s = self.indicatorShape as? DefaultVerticalIndicatorShape {
+				s.size = CGSize(width: s.size.width, height: pageIndicatorHeight)
+			}
+			self.rebuildDotLayers()
+		}
+	}
+
+	/// The size of the dot. Only applies to the default indicator shapes
+	@IBInspectable public var dotSize: CGFloat = 8 {
+		didSet {
+			if let s = self.indicatorShape as? DefaultHorizontalIndicatorShape {
+				s.dotSize = self.dotSize
+			}
+			if let s = self.indicatorShape as? DefaultVerticalIndicatorShape {
+				s.dotSize = self.dotSize
+			}
+			self.rebuildDotLayers()
+		}
+	}
+
+	////////
 
 	/// Create
 	@objc override public init(frame frameRect: NSRect) {
@@ -208,7 +215,7 @@ public class DSFPagerControl: NSView {
 	}
 
 	// The layers currently on display
-	internal var dotLayers: [DotLayer] = []
+	internal var dotLayers: [PageIndicatorLayer] = []
 
 	// The frame containing the dots
 	var dotsFrame: CGRect {
@@ -235,11 +242,12 @@ public extension DSFPagerControl {
 	}
 
 	override var intrinsicContentSize: NSSize {
-		switch self.orientation {
+		let i = self.indicatorShape
+		switch i.orientation {
 		case .horizontal:
-			return CGSize(width: self.pageIndicatorWidth * CGFloat(self.pageCount), height: self.pageIndicatorHeight)
+			return CGSize(width: i.size.width * CGFloat(self.pageCount), height: i.size.height)
 		case .vertical:
-			return CGSize(width: self.pageIndicatorWidth, height: self.pageIndicatorHeight * CGFloat(self.pageCount))
+			return CGSize(width: i.size.height, height: i.size.height * CGFloat(self.pageCount))
 		}
 	}
 
@@ -308,7 +316,7 @@ extension DSFPagerControl: DSFAppearanceCacheNotifiable {
 		self.dotLayers.removeAll()
 
 		(0 ..< self.pageCount).forEach { index in
-			let dl = DotLayer(index: index, parent: self)
+			let dl = PageIndicatorLayer(index: index, parent: self)
 			self.layer!.addSublayer(dl)
 			self.dotLayers.append(dl)
 		}
@@ -331,21 +339,23 @@ extension DSFPagerControl: DSFAppearanceCacheNotifiable {
 
 	// Layout the dot layers
 	func relayoutLayers() {
-		CATransaction.withDisabledActions {
-			switch self.orientation {
+		let i = self.indicatorShape
+
+		CATransaction.withDisabledActions(DSFAppearanceManager.ReduceMotion) {
+			switch i.orientation {
 			case .horizontal:
-				let w = (self.bounds.width - (self.pageIndicatorWidth * CGFloat(self.dotLayers.count))) / 2
+				let w = (self.bounds.width - (i.size.width * CGFloat(self.dotLayers.count))) / 2
 				var xOff: CGFloat = 0
 				self.dotLayers.forEach { l in
-					l.frame = CGRect(x: w + xOff, y: 0, width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
-					xOff += self.pageIndicatorWidth
+					l.frame = CGRect(x: w + xOff, y: 0, width: i.size.width, height: i.size.height)
+					xOff += i.size.width
 				}
 			case .vertical:
-				let h = (self.bounds.height - (self.pageIndicatorHeight * CGFloat(self.dotLayers.count))) / 2
+				let h = (self.bounds.height - (i.size.height * CGFloat(self.dotLayers.count))) / 2
 				var yOff: CGFloat = 0
 				self.dotLayers.forEach { l in
-					l.frame = CGRect(x: 0, y: h + yOff, width: self.pageIndicatorWidth, height: self.pageIndicatorHeight)
-					yOff += self.pageIndicatorHeight
+					l.frame = CGRect(x: 0, y: h + yOff, width: i.size.width, height: i.size.height)
+					yOff += i.size.height
 				}
 			}
 		}
@@ -435,7 +445,7 @@ public extension DSFPagerControl {
 // MARK: - Layer drawing
 
 extension DSFPagerControl {
-	class DotLayer: CAShapeLayer {
+	class PageIndicatorLayer: CAShapeLayer {
 		let index: Int
 		unowned var parent: DSFPagerControl
 
@@ -453,14 +463,13 @@ extension DSFPagerControl {
 		}
 
 		override init(layer: Any) {
-			guard let e = layer as? DSFPagerControl.DotLayer else {
+			guard let e = layer as? DSFPagerControl.PageIndicatorLayer else {
 				fatalError()
 			}
 			self.parent = e.parent
 			self.index = e.index
+			self.isSelected = e.isSelected
 			super.init(layer: layer)
-
-			self.setup()
 		}
 
 		@available(*, unavailable)
@@ -474,8 +483,9 @@ extension DSFPagerControl {
 
 		func updateDisplay() {
 			CATransaction.withDisabledActions(DSFAppearanceManager.ReduceMotion) {
+
 				self.parent.usingEffectiveAppearance {
-					if isSelected {
+					if self.isSelected {
 						self.fillColor = self.parent._selectedFillColor.cgColor
 						self.strokeColor = self.parent._selectedFillColor.cgColor
 					}
@@ -501,13 +511,10 @@ extension DSFPagerControl {
 
 		override func layoutSublayers() {
 			super.layoutSublayers()
-
-			let ds: CGFloat = self.parent.dotSize
-
-			let xO = max(0, (self.parent.pageIndicatorWidth - ds) / 2)
-			let yO = max(0, (self.parent.pageIndicatorHeight - ds) / 2)
-
-			self.path = CGPath(ellipseIn: CGRect(x: xO, y: yO, width: ds, height: ds), transform: nil)
+			self.path = self.parent.indicatorShape.path(
+				selectedPage: self.parent.selectedPage,
+				totalPageCount: self.parent.pageCount
+			)
 		}
 	}
 }

@@ -15,16 +15,16 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 	private let pageCount: Int
 	@Binding private var selectedPage: Int
 
+	private let indicatorShape: DSFPagerControlIndicatorShape
 	private let allowsMouseSelection: Bool
 	private let allowsKeyboardSelection: Bool
 	private let selectedColor: Color?
 	private let unselectedColor: Color?
 	private let bordered: Bool
-	private let orientation: DSFPagerControl.Orientation
 
-	/// <#Description#>
+	/// Create a pager control
 	/// - Parameters:
-	///   - orientation: The orientation for the control
+	///   - indicatorShape: The shape for the page indicators
 	///   - pageCount: The number of pages
 	///   - selectedPage: The selected page
 	///   - allowsMouseSelection: Allows the control to be controlled by the mouse
@@ -33,7 +33,7 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 	///   - unselectedColor: The color to draw an unselected page indicator
 	///   - bordered: If true, draws a border around unselected page indicators
 	public init(
-		orientation: DSFPagerControl.Orientation = .horizontal,
+		indicatorShape: DSFPagerControlIndicatorShape = DSFPagerControl.DefaultHorizontalIndicatorShape(),
 		pageCount: Int,
 		selectedPage: Binding<Int>,
 		allowsMouseSelection: Bool = false,
@@ -42,14 +42,39 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 		unselectedColor: Color? = nil,
 		bordered: Bool = false
 	) {
+		self.indicatorShape = indicatorShape
 		self.pageCount = pageCount
 		self._selectedPage = selectedPage
 		self.selectedColor = selectedColor
 		self.unselectedColor = unselectedColor
-		self.orientation = orientation
 		self.allowsMouseSelection = allowsMouseSelection
 		self.allowsKeyboardSelection = allowsKeyboardSelection
 		self.bordered = bordered
+	}
+
+	public init(
+		orientation: DSFPagerControl.Orientation,
+		pageCount: Int,
+		selectedPage: Binding<Int>,
+		allowsMouseSelection: Bool = false,
+		allowsKeyboardSelection: Bool = false,
+		selectedColor: Color? = nil,
+		unselectedColor: Color? = nil,
+		bordered: Bool = false
+	) {
+		let shape: DSFPagerControlIndicatorShape = (orientation == .horizontal)
+			? DSFPagerControl.DefaultHorizontalIndicatorShape()
+			: DSFPagerControl.DefaultVerticalIndicatorShape()
+		self.init(
+			indicatorShape: shape,
+			pageCount: pageCount,
+			selectedPage: selectedPage,
+			allowsMouseSelection: allowsMouseSelection,
+			allowsKeyboardSelection: allowsKeyboardSelection,
+			selectedColor: selectedColor,
+			unselectedColor: unselectedColor,
+			bordered: bordered
+		)
 	}
 
 	public func makeNSView(context: Context) -> DSFPagerControl {
@@ -57,10 +82,21 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 		p.delegate = context.coordinator
 		context.coordinator.parent = self
 		p.translatesAutoresizingMaskIntoConstraints = false
-		p.setContentHuggingPriority(.required, for: .vertical)
-		p.setContentHuggingPriority(.required, for: .horizontal)
+		p.setContentHuggingPriority(.init(900), for: .vertical)
+		p.setContentHuggingPriority(.init(900), for: .horizontal)
 
-		self.sync(p)
+		p.pageCount = self.pageCount
+		p.selectedPage = self.selectedPage
+		p.indicatorShape = self.indicatorShape
+		p.allowsMouseSelection = self.allowsMouseSelection
+		p.allowsKeyboardFocus = self.allowsKeyboardSelection
+		p.bordered = self.bordered
+		if let s = self.selectedColor {
+			p.selectedColor = NSColor(s)
+		}
+		if let s = self.unselectedColor {
+			p.unselectedColor = NSColor(s)
+		}
 
 		p.needsLayout = true
 
@@ -73,26 +109,17 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 
 	public func updateNSView(_ nsView: DSFPagerControl, context: Context) {
 		context.coordinator.parent = self
-		self.sync(nsView)
-	}
 
-	func sync(_ nsView: DSFPagerControl) {
-		DispatchQueue.main.async {
-			self._sync(nsView)
+		if self.indicatorShape !== nsView.indicatorShape {
+			nsView.indicatorShape = self.indicatorShape
 		}
-	}
 
-	func _sync(_ nsView: DSFPagerControl) {
 		if self.pageCount != nsView.pageCount {
 			nsView.pageCount = self.pageCount
 		}
 
 		if self.selectedPage != nsView.selectedPage {
 			nsView.selectedPage = self.selectedPage
-		}
-
-		if self.orientation != nsView.orientation {
-			nsView.orientation = self.orientation
 		}
 
 		if self.allowsMouseSelection != nsView.allowsMouseSelection {
@@ -133,6 +160,7 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 		@objc public func pagerControl(_ pager: DSFPagerControl, willMoveToPage page: Int) -> Bool {
 			return true
 		}
+
 		/// Called when the pager changed to a new page
 		@objc public func pagerControl(_ pager: DSFPagerControl, didMoveToPage page: Int) {
 			if parent.selectedPage != page {
@@ -142,7 +170,6 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 			}
 		}
 	}
-
 }
 
 @available(macOS 11, *)

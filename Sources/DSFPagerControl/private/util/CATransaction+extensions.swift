@@ -27,10 +27,13 @@ extension CATransaction {
 	/// - Parameters:
 	///   - disabled: If true, disables animations triggered actions within the block
 	///   - block: The block to perform
-	static func withDisabledActions(_ disabled: Bool = true, _ block: () -> Void) {
+	static func withDisabledActions(_ disabled: Bool = false, duration: Double? = nil, _ block: () -> Void) {
 		CATransaction.begin()
-		CATransaction.setDisableActions(disabled)
 		defer { CATransaction.commit() }
+		CATransaction.setDisableActions(disabled)
+		if let duration = duration {
+			CATransaction.setAnimationDuration(duration)
+		}
 		block()
 	}
 }

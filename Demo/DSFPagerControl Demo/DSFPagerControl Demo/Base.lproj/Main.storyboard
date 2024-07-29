@@ -914,6 +914,15 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="YES"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="pageIndicatorWidth">
+                                        <real key="value" value="40"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="pageIndicatorHeight">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="dotSize">
+                                        <real key="value" value="14"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </customView>
                             <customView verticalHuggingPriority="100" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mew-m6-orH" customClass="DSFPagerControl" customModule="DSFPagerControl">
@@ -928,11 +937,35 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="bordered" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </customView>
+                            <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dgM-ak-pae" customClass="DSFPagerControl" customModule="DSFPagerControl">
+                                <rect key="frame" x="204" y="277" width="162" height="50"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="pageCount">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMouseSelection" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsKeyboardFocus" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="selectedPage">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="pageIndicatorWidth">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="pageIndicatorHeight">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="dotSize">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </customView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="QM4-di-nj1" firstAttribute="top" secondItem="Gpx-09-Izh" secondAttribute="top" id="6ma-aa-A8R"/>
                             <constraint firstItem="Gpx-09-Izh" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="8ZG-ae-cWZ"/>
+                            <constraint firstItem="dgM-ak-pae" firstAttribute="leading" secondItem="hAM-Zr-4dD" secondAttribute="leading" id="JR0-gz-MSX"/>
                             <constraint firstItem="mew-m6-orH" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="OjK-Ns-jxR"/>
+                            <constraint firstItem="dgM-ak-pae" firstAttribute="top" secondItem="hAM-Zr-4dD" secondAttribute="bottom" constant="16" id="QG1-bx-ypl"/>
                             <constraint firstAttribute="trailing" secondItem="mew-m6-orH" secondAttribute="trailing" constant="20" symbolic="YES" id="S81-gF-fm0"/>
                             <constraint firstItem="QM4-di-nj1" firstAttribute="leading" secondItem="Gpx-09-Izh" secondAttribute="trailing" constant="22" id="d5C-Qe-1tZ"/>
                             <constraint firstItem="gGA-xy-QmS" firstAttribute="top" secondItem="mew-m6-orH" secondAttribute="bottom" constant="13" id="g9y-fi-35H"/>

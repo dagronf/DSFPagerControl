@@ -8,9 +8,36 @@
 import SwiftUI
 import DSFPagerControl
 
+class CustomPagerShape: DSFPagerControlIndicatorShape {
+	var orientation: DSFPagerControl.Orientation { .horizontal }
+	var size: CGSize { CGSize(width: 30, height: 8) }
+	@objc public func path(selectedPage: Int, totalPageCount: Int) -> CGPath {
+		CGPath(
+			roundedRect: CGRect(origin: .zero, size: size).insetBy(dx: 2, dy: 2),
+			cornerWidth: 2,
+			cornerHeight: 2,
+			transform: nil
+		)
+	}
+}
+let customPager = CustomPagerShape()
+
+
+class MiniPagerShape: DSFPagerControlIndicatorShape {
+	var orientation: DSFPagerControl.Orientation { .horizontal }
+	var size: CGSize { CGSize(width: 10, height: 10) }
+	@objc public func path(selectedPage: Int, totalPageCount: Int) -> CGPath {
+		CGPath(ellipseIn: CGRect(x: 2.5, y: 2.5, width: 5, height: 5), transform: nil)
+	}
+}
+let miniCustomPager = MiniPagerShape()
+
+
 struct ContentView: View {
 	@State var selection = 3
 	@State var pageCount = 10
+
+	@State var selectedCustom = 3
 
 	@State var drawBorder = false
 
@@ -43,7 +70,7 @@ struct ContentView: View {
 
 			HStack {
 
-				VStack(spacing: 4) {
+				VStack(spacing: 8) {
 					DSFPagerControlUI(
 						pageCount: pageCount,
 						selectedPage: $selection,
@@ -51,40 +78,61 @@ struct ContentView: View {
 						bordered: drawBorder
 					)
 
-					DSFPagerControlUI(
-						pageCount: pageCount,
-						selectedPage: $selection,
-						allowsMouseSelection: true,
-						selectedColor: Color.red,
-						unselectedColor: Color.blue.opacity(0.2),
-						bordered: drawBorder
-					)
+//					DSFPagerControlUI(
+//						pageCount: pageCount,
+//						selectedPage: $selection,
+//						allowsMouseSelection: true,
+//						selectedColor: Color.red,
+//						unselectedColor: Color.blue.opacity(0.2),
+//						bordered: drawBorder
+//					)
 
-					Text("Selected page: \(selection + 1)")
-					Text("Page Count: \(pageCount)")
-
-					Button {
-						drawBorder.toggle()
-					} label: {
-						Text("Toggle borders")
-					}
-
-					Button {
-						selection = 0
-						pageCount += 1
-					} label: {
-						Text("Reset")
-					}
+//					Text("Selected page: \(selection + 1)")
+//					Text("Page Count: \(pageCount)")
+//
+//					Button {
+//						drawBorder.toggle()
+//					} label: {
+//						Text("Toggle borders")
+//					}
+//
+//					Button {
+//						selection = 0
+//						pageCount += 1
+//					} label: {
+//						Text("Reset")
+//					}
 					Spacer()
 				}
 
+//				DSFPagerControlUI(
+//					orientation: .vertical,
+//					pageCount: pageCount,
+//					selectedPage: $selection,
+//					allowsKeyboardSelection: true,
+//					selectedColor: .green,
+//					unselectedColor: .green.opacity(0.1),
+//					bordered: drawBorder
+//				)
+			}
+
+			Divider()
+
+			VStack(spacing: 8) {
+				Text("Custom pager indicator shapes") // (selection = \(selectedCustom))")
 				DSFPagerControlUI(
-					orientation: .vertical,
-					pageCount: pageCount,
-					selectedPage: $selection,
+					indicatorShape: customPager,
+					pageCount: 8,
+					selectedPage: $selectedCustom,
+					allowsMouseSelection: true,
+					bordered: drawBorder
+				)
+				DSFPagerControlUI(
+					indicatorShape: miniCustomPager,
+					pageCount: 8,
+					selectedPage: $selectedCustom,
+					allowsMouseSelection: true,
 					allowsKeyboardSelection: true,
-					selectedColor: .green,
-					unselectedColor: .green.opacity(0.1),
 					bordered: drawBorder
 				)
 			}
