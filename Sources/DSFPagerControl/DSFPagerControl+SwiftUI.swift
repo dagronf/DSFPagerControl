@@ -33,7 +33,7 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 	///   - unselectedColor: The color to draw an unselected page indicator
 	///   - bordered: If true, draws a border around unselected page indicators
 	public init(
-		indicatorShape: DSFPagerControlIndicatorShape = DSFPagerControl.DefaultHorizontalIndicatorShape(),
+		indicatorShape: DSFPagerControlIndicatorShape = DSFPagerControl.HorizontalIndicatorShape(),
 		pageCount: Int,
 		selectedPage: Binding<Int>,
 		allowsMouseSelection: Bool = false,
@@ -63,8 +63,8 @@ public struct DSFPagerControlUI: NSViewRepresentable {
 		bordered: Bool = false
 	) {
 		let shape: DSFPagerControlIndicatorShape = (orientation == .horizontal)
-			? DSFPagerControl.DefaultHorizontalIndicatorShape()
-			: DSFPagerControl.DefaultVerticalIndicatorShape()
+			? DSFPagerControl.HorizontalIndicatorShape()
+			: DSFPagerControl.VerticalIndicatorShape()
 		self.init(
 			indicatorShape: shape,
 			pageCount: pageCount,

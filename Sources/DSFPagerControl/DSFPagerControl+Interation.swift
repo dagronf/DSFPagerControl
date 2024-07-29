@@ -27,6 +27,7 @@ import Carbon.HIToolbox
 // MARK: - Keyboard and mouse handing
 
 public extension DSFPagerControl {
+
 	override var acceptsFirstResponder: Bool {
 		return allowsKeyboardFocus
 	}

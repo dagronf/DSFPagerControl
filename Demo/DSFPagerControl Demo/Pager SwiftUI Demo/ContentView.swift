@@ -8,30 +8,20 @@
 import SwiftUI
 import DSFPagerControl
 
-class CustomPagerShape: DSFPagerControlIndicatorShape {
-	var orientation: DSFPagerControl.Orientation { .horizontal }
-	var size: CGSize { CGSize(width: 30, height: 8) }
+let customPager  = DSFPagerControl.ThinHorizontalPillShape()
+let customPager2 = DSFPagerControl.ThinHorizontalRoundedShape()
+let miniCustomPager = DSFPagerControl.MiniDotsShape()
+
+// bigger dots
+class BiggerDotsShape: DSFPagerControlIndicatorShape {
+	public init() {}
+	public var orientation: DSFPagerControl.Orientation { .horizontal }
+	public var size: CGSize { CGSize(width: 40, height: 20) }
 	@objc public func path(selectedPage: Int, totalPageCount: Int) -> CGPath {
-		CGPath(
-			roundedRect: CGRect(origin: .zero, size: size).insetBy(dx: 2, dy: 2),
-			cornerWidth: 2,
-			cornerHeight: 2,
-			transform: nil
-		)
+		CGPath(ellipseIn: CGRect(x: 13, y: 3, width: 14, height: 14), transform: nil)
+		//CGPath(ellipseIn: CGRect(x: 2.5, y: 2.5, width: 5, height: 5), transform: nil)
 	}
 }
-let customPager = CustomPagerShape()
-
-
-class MiniPagerShape: DSFPagerControlIndicatorShape {
-	var orientation: DSFPagerControl.Orientation { .horizontal }
-	var size: CGSize { CGSize(width: 10, height: 10) }
-	@objc public func path(selectedPage: Int, totalPageCount: Int) -> CGPath {
-		CGPath(ellipseIn: CGRect(x: 2.5, y: 2.5, width: 5, height: 5), transform: nil)
-	}
-}
-let miniCustomPager = MiniPagerShape()
-
 
 struct ContentView: View {
 	@State var selection = 3
@@ -78,48 +68,48 @@ struct ContentView: View {
 						bordered: drawBorder
 					)
 
-//					DSFPagerControlUI(
-//						pageCount: pageCount,
-//						selectedPage: $selection,
-//						allowsMouseSelection: true,
-//						selectedColor: Color.red,
-//						unselectedColor: Color.blue.opacity(0.2),
-//						bordered: drawBorder
-//					)
+					DSFPagerControlUI(
+						pageCount: pageCount,
+						selectedPage: $selection,
+						allowsMouseSelection: true,
+						selectedColor: Color.red,
+						unselectedColor: Color.blue.opacity(0.2),
+						bordered: drawBorder
+					)
 
-//					Text("Selected page: \(selection + 1)")
-//					Text("Page Count: \(pageCount)")
-//
-//					Button {
-//						drawBorder.toggle()
-//					} label: {
-//						Text("Toggle borders")
-//					}
-//
-//					Button {
-//						selection = 0
-//						pageCount += 1
-//					} label: {
-//						Text("Reset")
-//					}
+					Text("Selected page: \(selection + 1)")
+					Text("Page Count: \(pageCount)")
+
+					Button {
+						drawBorder.toggle()
+					} label: {
+						Text("Toggle borders")
+					}
+
+					Button {
+						selection = 0
+						pageCount += 1
+					} label: {
+						Text("Reset")
+					}
 					Spacer()
 				}
 
-//				DSFPagerControlUI(
-//					orientation: .vertical,
-//					pageCount: pageCount,
-//					selectedPage: $selection,
-//					allowsKeyboardSelection: true,
-//					selectedColor: .green,
-//					unselectedColor: .green.opacity(0.1),
-//					bordered: drawBorder
-//				)
+				DSFPagerControlUI(
+					orientation: .vertical,
+					pageCount: pageCount,
+					selectedPage: $selection,
+					allowsKeyboardSelection: true,
+					selectedColor: .green,
+					unselectedColor: .green.opacity(0.1),
+					bordered: drawBorder
+				)
 			}
 
 			Divider()
 
-			VStack(spacing: 8) {
-				Text("Custom pager indicator shapes") // (selection = \(selectedCustom))")
+			VStack(spacing: 12) {
+				Text("Custom pager indicator shapes (selection = \(selectedCustom))")
 				DSFPagerControlUI(
 					indicatorShape: customPager,
 					pageCount: 8,
@@ -128,11 +118,29 @@ struct ContentView: View {
 					bordered: drawBorder
 				)
 				DSFPagerControlUI(
+					indicatorShape: customPager2,
+					pageCount: 8,
+					selectedPage: $selectedCustom,
+					allowsMouseSelection: true,
+					selectedColor: .blue,
+					bordered: drawBorder
+				)
+				DSFPagerControlUI(
 					indicatorShape: miniCustomPager,
 					pageCount: 8,
 					selectedPage: $selectedCustom,
 					allowsMouseSelection: true,
 					allowsKeyboardSelection: true,
+					bordered: drawBorder
+				)
+				DSFPagerControlUI(
+					indicatorShape: BiggerDotsShape(),
+					pageCount: 8,
+					selectedPage: $selectedCustom,
+					allowsMouseSelection: true,
+					allowsKeyboardSelection: true,
+					selectedColor: .purple,
+					unselectedColor: .purple.opacity(0.2),
 					bordered: drawBorder
 				)
 			}

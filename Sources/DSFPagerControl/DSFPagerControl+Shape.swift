@@ -48,30 +48,4 @@ public extension DSFPagerControl {
 	}
 }
 
-public extension DSFPagerControl {
-	/// Default horizontal page indicator
-	@objc class DefaultHorizontalIndicatorShape: NSObject, DSFPagerControlIndicatorShape {
-		public var orientation: DSFPagerControl.Orientation { .horizontal }
-		public var size: CGSize = CGSize(width: 20, height: 20)
-		public var dotSize: CGFloat = 8
-		@objc public func path(selectedPage: Int, totalPageCount: Int) -> CGPath {
-			let xO = max(0, (self.size.width - self.dotSize) / 2)
-			let yO = max(0, (self.size.height - self.dotSize) / 2)
-			return CGPath(ellipseIn: CGRect(x: xO, y: yO, width: self.dotSize, height: self.dotSize), transform: nil)
-		}
-	}
-
-	/// Default vertical page indicator
-	@objc class DefaultVerticalIndicatorShape: NSObject, DSFPagerControlIndicatorShape {
-		public var orientation: DSFPagerControl.Orientation { .vertical }
-		public var size: CGSize = CGSize(width: 20, height: 20)
-		public var dotSize: CGFloat = 8
-		@objc public func path(selectedPage: Int, totalPageCount: Int) -> CGPath {
-			let xO = max(0, (self.size.width - self.dotSize) / 2)
-			let yO = max(0, (self.size.height - self.dotSize) / 2)
-			return CGPath(ellipseIn: CGRect(x: xO, y: yO, width: self.dotSize, height: self.dotSize), transform: nil)
-		}
-	}
-}
-
 #endif

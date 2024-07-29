@@ -68,7 +68,7 @@ public class DSFPagerControl: NSView {
 	}
 
 	/// The indicator shape
-	@objc public var indicatorShape: DSFPagerControlIndicatorShape = DefaultHorizontalIndicatorShape() {
+	@objc public var indicatorShape: DSFPagerControlIndicatorShape = HorizontalIndicatorShape() {
 		didSet {
 			self.rebuildDotLayers()
 		}
@@ -76,7 +76,7 @@ public class DSFPagerControl: NSView {
 
 	@IBInspectable public var isHorizontal: Bool = true {
 		didSet {
-			self.indicatorShape = self.isHorizontal ? DefaultHorizontalIndicatorShape() : DefaultVerticalIndicatorShape()
+			self.indicatorShape = self.isHorizontal ? HorizontalIndicatorShape() : VerticalIndicatorShape()
 		}
 	}
 
@@ -137,10 +137,10 @@ public class DSFPagerControl: NSView {
 	/// The width of each page indicator. Only applies to the default indicator shapes
 	@IBInspectable public var pageIndicatorWidth: CGFloat = 20 {
 		didSet {
-			if let s = self.indicatorShape as? DefaultHorizontalIndicatorShape {
+			if let s = self.indicatorShape as? HorizontalIndicatorShape {
 				s.size = CGSize(width: pageIndicatorWidth, height: s.size.height)
 			}
-			if let s = self.indicatorShape as? DefaultVerticalIndicatorShape {
+			if let s = self.indicatorShape as? VerticalIndicatorShape {
 				s.size = CGSize(width: pageIndicatorWidth, height: s.size.height)
 			}
 			self.rebuildDotLayers()
@@ -150,10 +150,10 @@ public class DSFPagerControl: NSView {
 	/// The height of each page indicator. Only applies to the default indicator shapes
 	@IBInspectable public var pageIndicatorHeight: CGFloat = 20 {
 		didSet {
-			if let s = self.indicatorShape as? DefaultHorizontalIndicatorShape {
+			if let s = self.indicatorShape as? HorizontalIndicatorShape {
 				s.size = CGSize(width: s.size.width, height: pageIndicatorHeight)
 			}
-			if let s = self.indicatorShape as? DefaultVerticalIndicatorShape {
+			if let s = self.indicatorShape as? VerticalIndicatorShape {
 				s.size = CGSize(width: s.size.width, height: pageIndicatorHeight)
 			}
 			self.rebuildDotLayers()
@@ -163,10 +163,10 @@ public class DSFPagerControl: NSView {
 	/// The size of the dot. Only applies to the default indicator shapes
 	@IBInspectable public var dotSize: CGFloat = 8 {
 		didSet {
-			if let s = self.indicatorShape as? DefaultHorizontalIndicatorShape {
+			if let s = self.indicatorShape as? HorizontalIndicatorShape {
 				s.dotSize = self.dotSize
 			}
-			if let s = self.indicatorShape as? DefaultVerticalIndicatorShape {
+			if let s = self.indicatorShape as? VerticalIndicatorShape {
 				s.dotSize = self.dotSize
 			}
 			self.rebuildDotLayers()
@@ -512,7 +512,7 @@ extension DSFPagerControl {
 		override func layoutSublayers() {
 			super.layoutSublayers()
 			self.path = self.parent.indicatorShape.path(
-				selectedPage: self.parent.selectedPage,
+				selectedPage: index,
 				totalPageCount: self.parent.pageCount
 			)
 		}
