@@ -106,6 +106,41 @@ public extension DSFPagerControl {
 			return CGPath(roundedRect: rectangleRect, cornerWidth: 2, cornerHeight: 2, transform: nil)
 		}
 	}
+
+	class ChunkyVerticalShape: DSFPagerControlIndicatorShape {
+		public init() { }
+		public var orientation: DSFPagerControl.Orientation { .vertical }
+		public var size: CGSize { CGSize(width: 16, height: 16) }
+		@objc public func path(selectedPage: Int, totalPageCount: Int) -> CGPath {
+			if selectedPage == 0 {
+				let rectangleCornerRadius: CGFloat = 7
+				let rectangleRect = NSRect(x: 1, y: 1, width: 14, height: 14)
+				let rectangleInnerRect = rectangleRect.insetBy(dx: rectangleCornerRadius, dy: rectangleCornerRadius)
+				let rectanglePath = NSBezierPath()
+				rectanglePath.appendArc(withCenter: NSPoint(x: rectangleInnerRect.minX, y: rectangleInnerRect.minY), radius: rectangleCornerRadius, startAngle: 180, endAngle: 270)
+				rectanglePath.appendArc(withCenter: NSPoint(x: rectangleInnerRect.maxX, y: rectangleInnerRect.minY), radius: rectangleCornerRadius, startAngle: 270, endAngle: 360)
+				rectanglePath.line(to: NSPoint(x: rectangleRect.maxX, y: rectangleRect.maxY))
+				rectanglePath.line(to: NSPoint(x: rectangleRect.minX, y: rectangleRect.maxY))
+				rectanglePath.close()
+				return rectanglePath.makeCGPath()
+			}
+			else if selectedPage == totalPageCount - 1 {
+				let rectangleCornerRadius: CGFloat = 7
+				let rectangleRect = NSRect(x: 1, y: 1, width: 14, height: 14)
+				let rectangleInnerRect = rectangleRect.insetBy(dx: rectangleCornerRadius, dy: rectangleCornerRadius)
+				let rectanglePath = NSBezierPath()
+				rectanglePath.move(to: NSPoint(x: rectangleRect.minX, y: rectangleRect.minY))
+				rectanglePath.line(to: NSPoint(x: rectangleRect.maxX, y: rectangleRect.minY))
+				rectanglePath.appendArc(withCenter: NSPoint(x: rectangleInnerRect.maxX, y: rectangleInnerRect.maxY), radius: rectangleCornerRadius, startAngle: 0, endAngle: 90)
+				rectanglePath.appendArc(withCenter: NSPoint(x: rectangleInnerRect.minX, y: rectangleInnerRect.maxY), radius: rectangleCornerRadius, startAngle: 90, endAngle: 180)
+				rectanglePath.close()
+				return rectanglePath.makeCGPath()
+			}
+			else {
+				return CGPath(rect: CGRect(x: 1, y: 1, width: 14, height: 14), transform: nil)
+			}
+		}
+	}
 }
 
 #endif

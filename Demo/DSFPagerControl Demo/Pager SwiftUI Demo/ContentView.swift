@@ -11,6 +11,7 @@ import DSFPagerControl
 let customPager  = DSFPagerControl.ThinHorizontalPillShape()
 let customPager2 = DSFPagerControl.ThinHorizontalRoundedShape()
 let miniCustomPager = DSFPagerControl.MiniDotsShape()
+let chunkyPager = DSFPagerControl.ChunkyVerticalShape()
 
 // bigger dots
 class BiggerDotsShape: DSFPagerControlIndicatorShape {
@@ -103,6 +104,15 @@ struct ContentView: View {
 					pageCount: pageCount,
 					selectedPage: $selection,
 					allowsKeyboardSelection: true,
+					selectedColor: .green,
+					unselectedColor: .green.opacity(0.1),
+					bordered: drawBorder
+				)
+				DSFPagerControlUI(
+					indicatorShape: chunkyPager,
+					pageCount: pageCount,
+					selectedPage: $selection,
+					allowsMouseSelection: true,
 					selectedColor: .green,
 					unselectedColor: .green.opacity(0.1),
 					bordered: drawBorder
